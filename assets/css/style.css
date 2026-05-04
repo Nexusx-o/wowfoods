@@ -1,0 +1,78 @@
+/* Custom Styles */
+.hero-section {
+    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+                url('https://images.unsplash.com/photo-1543353071-873f17a7a088?q=80&w=2000');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    height: 100vh;
+}
+
+.navbar {
+    transition: background 0.4s ease;
+}
+
+.btn-primary {
+    background-color: #E63946 !important;
+    border: none;
+}
+
+.btn-warning {
+    background-color: #F77F00 !important;
+    border: none;
+    color: white !important;
+}
+
+.category-card {
+    transition: transform 0.3s ease;
+}
+
+.category-card:hover {
+    transform: translateY(-10px);
+}
+
+.category-card img {
+    height: 200px;
+    object-fit: cover;
+}
+
+/* Smooth Scrolling */
+html {
+    scroll-behavior: smooth;
+}
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
+}
+
+.food-card {
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.food-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}
+
+.btn-outline-danger {
+    border-radius: 50px;
+    font-weight: 600;
+}
+
+.badge {
+    padding: 0.5em 1em;
+}
+
+.hover-red:hover {
+    color: #E63946 !important; /* WOW Red */
+    transition: 0.3s;
+}
+
+footer hr {
+    opacity: 0.1;
+}
+
+footer h5 {
+    letter-spacing: 1px;
+}
