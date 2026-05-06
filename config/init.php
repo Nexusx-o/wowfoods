@@ -12,7 +12,7 @@ require_once __DIR__ . '/database.php';
 
 // 3. Define Global Constants
 // Use __DIR__ to make paths more reliable across different environments
-define('SITEURL', 'http://localhost/WowFoods/'); 
+define('SITEURL', 'http://localhost/https---github.com-Nexusx-o-WowFoods/'); 
 define('ASSETS_URL', SITEURL . 'assets/');
 
 // 4. Global Utility Functions
