@@ -25,9 +25,9 @@ include'config/database.php';
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="view/menu.php">Menu</a></li>
-                <li class="nav-item"><a class="nav-link" href="view/login.php">Login</a></li>
-                <li class="nav-item ms-lg-3"><a class="btn btn-primary rounded-pill px-4" href="view/menu.php">Order Now</a></li>
+                <li class="nav-item"><a class="nav-link" href="controller/menu_view.php">Menu</a></li>
+                <li class="nav-item"><a class="nav-link" href="controller/login_controller.php">Login</a></li>
+                <li class="nav-item ms-lg-3"><a class="btn btn-primary rounded-pill px-4" href="controller/menu_view.php">Order Now</a></li>
             </ul>
         </div>
     </nav>
@@ -76,34 +76,38 @@ include'config/database.php';
                 <div class="mx-auto bg-danger" style="height: 3px; width: 60px;"></div>
             </div>
             <div class="row g-4">
-                <?php
-                // Fetching from your 'category' table using PDO
-                try {
-                    // We use a simple query() here since there are no user-input variables
-                    $stmt = $pdo->query("SELECT * FROM category WHERE active='Yes' LIMIT 4");
-                    
-                    // PDO fetch loop
-                    while ($cat = $stmt->fetch()): 
-                ?>
-                    <div class="col-md-3">
-                        <div class="card category-card border-0 shadow-sm overflow-hidden">
-                            <?php 
-                                // Logic to handle image name from DB or fallback to placeholder
-                                $image_path = !empty($cat['image_name']) ? "images/category/".$cat['image_name'] : "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=500";
-                            ?>
-                            <img src="<?php echo $image_path; ?>" class="card-img-top" alt="<?php echo htmlspecialchars($cat['title']); ?>">
-                            <div class="card-body text-center">
-                                <h5 class="card-title fw-bold"><?php echo htmlspecialchars($cat['title']); ?></h5>
-                                <a href="menu.php?cat=<?php echo $cat['id']; ?>" class="stretched-link text-danger text-decoration-none">View All</a>
+                <div class="row g-4">
+                    <?php if (!empty($categories)): ?>
+                        <?php foreach ($categories as $cat): ?>
+                            <div class="col-md-3">
+                                <div class="card category-card border-0 shadow-sm overflow-hidden">
+                                    <?php 
+                                        // Simplified View Logic: Determine image source
+                                        $image_path = !empty($cat['image_name']) 
+                                            ? "images/category/" . $cat['image_name'] 
+                                            : "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=500";
+                                    ?>
+                                    
+                                    <img src="<?php echo $image_path; ?>" 
+                                        class="card-img-top" 
+                                        alt="<?php echo htmlspecialchars($cat['title']); ?>">
+                                    
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title fw-bold">
+                                            <?php echo htmlspecialchars($cat['title']); ?>
+                                        </h5>
+                                        <a href="menu.php?cat=<?php echo $cat['id']; ?>" 
+                                        class="stretched-link text-danger text-decoration-none">
+                                            View All
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                <?php 
-                    endwhile; 
-                } catch (PDOException $e) {
-                    echo "Error fetching categories: " . $e->getMessage();
-                }
-                ?>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p class="text-center">No categories found.</p>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
     </section>
