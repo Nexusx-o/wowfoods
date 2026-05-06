@@ -46,7 +46,7 @@
                     <a href="forgot-password.php" class="text-small-bold brand-red text-decoration-none">Forgot Password?</a>
                     <hr class="my-3 opacity-10">
                     <p class="small mb-1">Don't have an account? 
-                        <a href="signup.php" class="brand-red fw-bold text-decoration-none">Sign Up</a>
+                        <a href="../controller/signup_controller.php" class="brand-red fw-bold text-decoration-none">Sign Up</a>
                     </p>
                     <a href="index.php" class="text-muted text-decoration-none small">Back to Home</a>
                 </div>
