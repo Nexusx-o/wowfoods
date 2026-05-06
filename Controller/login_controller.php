@@ -1,6 +1,10 @@
 <?php
 require_once '../config/init.php';
 
+// 1. Initialize the database connection using your new Class
+$database = new Database();
+$pdo = $database->getConnection();
+
 $error = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -11,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error = "Please enter both credentials.";
     } else {
         try {
-            // 1. Check 'user' table (Admin/User)
+            // Check 'user' table (Admin/Staff)
             $stmt = $pdo->prepare("SELECT id, username, password, first_name, last_name, role FROM user WHERE username = ?");
             $stmt->execute([$email_or_username]);
             $user = $stmt->fetch();
@@ -20,10 +24,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['full_name'] = $user['first_name'] . ' ' . $user['last_name'];
                 $_SESSION['role'] = $user['role'];
-                redirect('admin/dashboard.php');
+                
+                // Redirect on success
+                redirect('controller/test_controller.php');
             }
 
-            // 2. Check 'customers' table
+            // Check 'customers' table
             $stmt_cust = $pdo->prepare("SELECT id, email, password, first_name, last_name FROM customers WHERE email = ?");
             $stmt_cust->execute([$email_or_username]);
             $cust = $stmt_cust->fetch();
@@ -32,6 +38,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION['customer_id'] = $cust['id'];
                 $_SESSION['full_name'] = $cust['first_name'] . ' ' . $cust['last_name'];
                 $_SESSION['role'] = 'customer';
+                
+                // Redirect on success
                 redirect('public/menu.php');
             }
 
@@ -42,5 +50,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Load the View
+// 2. THIS MUST LOAD THE VIEW (HTML Form), NOT THE TEST CONTROLLER
 include '../view/login_view.php';

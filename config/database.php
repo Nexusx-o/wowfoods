@@ -1,21 +1,24 @@
 <?php
 // config/database.php
-$host = 'localhost';
-$db   = 'food_order';
-$user = 'root';
-$pass = '';
-$port = 3308;
-$charset = 'utf8mb4';
+class Database {
+    private $host = 'localhost';
+    private $db   = 'food_order';
+    private $user = 'root';
+    private $pass = 'myposadminauthentication';
+    private $pdo;
 
-$dsn = "mysql:host=$host;port=$port;dbname=$db;charset=$charset";
-$options = [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    PDO::ATTR_EMULATE_PREPARES   => false,
-];
-
-try {
-     $pdo = new PDO($dsn, $user, $pass, $options);
-} catch (\PDOException $e) {
-     throw new \PDOException($e->getMessage(), (int)$e->getCode());
+    public function getConnection() {
+        if ($this->pdo === null) {
+            $dsn = "mysql:host=$this->host;dbname=$this->db;charset=utf8mb4";
+            try {
+                $this->pdo = new PDO($dsn, $this->user, $this->pass, [
+                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+                ]);
+            } catch (\PDOException $e) {
+                throw new \PDOException($e->getMessage(), (int)$e->getCode());
+            }
+        }
+        return $this->pdo;
+    }
 }
