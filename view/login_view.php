@@ -43,7 +43,7 @@
                 </form>
 
                 <div class="text-center mt-4">
-                    <a href="forgot-password.php" class="text-small-bold brand-red text-decoration-none">Forgot Password?</a>
+                    <a href="../controller/forgot_password_controller.php" class="text-small-bold brand-red text-decoration-none">Forgot Password?</a>
                     <hr class="my-3 opacity-10">
                     <p class="small mb-1">Don't have an account? 
                         <a href="../controller/signup_controller.php" class="brand-red fw-bold text-decoration-none">Sign Up</a>
