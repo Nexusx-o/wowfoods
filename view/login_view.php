@@ -28,7 +28,7 @@
                     <div class="alert alert-danger py-2 small text-center"><?php echo $error; ?></div>
                 <?php endif; ?>
 
-                <form action="login.php" method="POST">
+                <form action="../controller/login_controller.php" method="POST">
                     <div class="mb-3">
                         <label class="form-label text-small-bold">Email or Username</label>
                         <input type="text" name="username" class="form-control" placeholder="Enter your email" required>
@@ -43,7 +43,7 @@
                 </form>
 
                 <div class="text-center mt-4">
-                    <a href="forgot-password.php" class="text-small-bold brand-red text-decoration-none">Forgot Password?</a>
+                    <a href="../controller/forgot_password_controller.php" class="text-small-bold brand-red text-decoration-none">Forgot Password?</a>
                     <hr class="my-3 opacity-10">
                     <p class="small mb-1">Don't have an account? 
                         <a href="../controller/signup_controller.php" class="brand-red fw-bold text-decoration-none">Sign Up</a>
