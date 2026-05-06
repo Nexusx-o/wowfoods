@@ -1,8 +1,13 @@
 <?php
+// controller/signup_controller.php
 require_once '../config/init.php';
+require_once '../model/signup_model.php';
 
 $error_message = "";
 $success_message = "";
+
+// Initialize variables for "Sticky" form fields
+$full_name = $email = $phone = $address = $city = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     // 1. Collect and Sanitization
@@ -14,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     $password  = $_POST['password'];
     $confirm   = $_POST['confirm_password'];
 
-    // 2. Complex Validation Logic
+    // 2. Validation Logic
     if (empty($full_name) || empty($email) || empty($phone) || empty($password)) {
         $error_message = "All required fields must be filled.";
     } 
@@ -22,13 +27,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error_message = "Please enter a valid email address.";
     }
-    // Validate Name (Must have at least two parts)
+    // Validate Full Name (at least 2 words)
     elseif (str_word_count($full_name) < 2) {
         $error_message = "Please enter your full name (First and Last name).";
     }
-    // Validate Phone (Basic numeric and length check)
+    // Validate Phone Number (digits only, length between 10 and 15)
     elseif (!preg_match('/^[0-9]{10,15}$/', $phone)) {
-        $error_message = "Please enter a valid phone number (10-15 digits).";
+        $error_message = "Please enter a valid phone number.";
     }
     // Validate Password Strength
     elseif (strlen($password) < 8) {
@@ -38,22 +43,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
         $error_message = "Passwords do not match.";
     } 
     else {
-        // 3. Database Operations (The Model part)
+        // 3. Model Interaction
+        $customerModel = new CustomerModel($pdo);
+
         try {
-            $stmt = $pdo->prepare("SELECT id FROM customers WHERE email = ?");
-            $stmt->execute([$email]);
-            
-            if ($stmt->fetch()) {
+            if ($customerModel->emailExists($email)) {
                 $error_message = "This email is already registered.";
             } else {
-                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
                 $nameParts = explode(' ', $full_name, 2);
+                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
                 
-                $sql = "INSERT INTO customers (first_name, last_name, email, password, phone, address, city) 
-                        VALUES (:fname, :lname, :email, :pass, :phone, :addr, :city)";
-                
-                $insert = $pdo->prepare($sql);
-                $result = $insert->execute([
+                $customerData = [
                     ':fname' => $nameParts[0],
                     ':lname' => $nameParts[1] ?? '',
                     ':email' => $email,
@@ -61,14 +61,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
                     ':phone' => $phone,
                     ':addr'  => $address,
                     ':city'  => $city
-                ]);
+                ];
 
-                if ($result) {
+                if ($customerModel->create($customerData)) {
                     $success_message = "Account created! Redirecting...";
                 }
             }
         } catch (PDOException $e) {
-            $error_message = "An error occurred. Please try again later.";
+            $error_message = "Database error. Please try again later.";
         }
     }
 }
