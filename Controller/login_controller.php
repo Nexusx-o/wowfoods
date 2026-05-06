@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION['role'] = $user['role'];
                 
                 // Redirect on success
-                redirect('controller/test_controller.php');
+                redirect('controller/admin_dashboard_controller.php');
             }
 
             // Check 'customers' table
