@@ -1,7 +1,7 @@
 <?php
 // reset-password.php
 require_once 'config/init.php';
-require_once 'models/AuthModel.php';
+// require_once 'models/AuthModel.php';
 
 $error = '';
 $message = '';
