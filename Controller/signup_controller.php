@@ -11,8 +11,9 @@ $full_name = $email = $phone = $address = $city = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     // 1. Collect and Sanitization
-    $full_name = cleanInput($_POST['full_name']);
-    $email     = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
+    $first_name = cleanInput($_POST['first_name']);
+    $last_name  = cleanInput($_POST['last_name']);
+    $email      = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
     $phone     = cleanInput($_POST['phone']);
     $address   = cleanInput($_POST['address']);
     $city      = cleanInput($_POST['city']);
@@ -20,9 +21,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     $confirm   = $_POST['confirm_password'];
 
     // 2. Validation Logic
-    if (empty($full_name) || empty($email) || empty($phone) || empty($password)) {
-        $error_message = "All required fields must be filled.";
-    } 
+    if (empty($first_name) || empty($last_name) || empty($email) || empty($phone) || empty($password)) {
+    $error_message = "All required fields must be filled.";
+    }
     // Validate Email Format
     elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error_message = "Please enter a valid email address.";
@@ -54,8 +55,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
                 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
                 
                 $customerData = [
-                    ':fname' => $nameParts[0],
-                    ':lname' => $nameParts[1] ?? '',
+                    ':fname' => $first_name,
+                    ':lname' => $last_name,
                     ':email' => $email,
                     ':pass'  => $hashed_password,
                     ':phone' => $phone,
