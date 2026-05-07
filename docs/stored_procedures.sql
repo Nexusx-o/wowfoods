@@ -226,3 +226,50 @@ END //
 
 DELIMITER ;
 
+DELIMITER //
+
+DELIMITER //
+
+-- 1. Get all users for the management table
+CREATE PROCEDURE GetAllUsers()
+BEGIN
+    SELECT id, first_name, last_name, username, email, role, created_at 
+    FROM `user` 
+    ORDER BY id DESC;
+END //
+
+-- 2. Add a new user
+CREATE PROCEDURE AddUser(
+    IN p_first VARCHAR(50), 
+    IN p_last VARCHAR(50), 
+    IN p_user VARCHAR(100), 
+    IN p_pass VARCHAR(255), 
+    IN p_email VARCHAR(150), 
+    IN p_role ENUM('Admin', 'Manager', 'Staff')
+)
+BEGIN
+    INSERT INTO `user` (first_name, last_name, username, password, email, role)
+    VALUES (p_first, p_last, p_user, p_pass, p_email, p_role);
+END //
+
+-- 3. Update existing user (without changing password)
+CREATE PROCEDURE UpdateUser(
+    IN p_id INT,
+    IN p_first VARCHAR(50),
+    IN p_last VARCHAR(50),
+    IN p_user VARCHAR(100),
+    IN p_email VARCHAR(150),
+    IN p_role ENUM('Admin', 'Manager', 'Staff')
+)
+BEGIN
+    UPDATE `user` SET 
+        first_name = p_first, 
+        last_name = p_last, 
+        username = p_user, 
+        email = p_email, 
+        role = p_role 
+    WHERE id = p_id;
+END //
+
+DELIMITER ;
+
