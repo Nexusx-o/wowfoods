@@ -25,21 +25,35 @@ switch ($action) {
         include '../view/add_category_view.php';
         break;
 
-    case 'update':
-        $category = $categoryModel->getById($id);
-        if (isset($_POST['submit'])) {
-            $title = cleanInput($_POST['title']);
-            $active = $_POST['active'];
-            // Keep old image if new one isn't uploaded
-            $image = ($_FILES['image']['name'] != "") ? handleImageUpload($_FILES['image'], 'category') : $category['image_name'];
-            
-            if ($categoryModel->update($id, $title, $image, $active, $_SESSION['user_id'])) {
-                redirect('Controller/Category_Controller.php?action=manage&msg=updated');
-            }
-        }
-        include '../view/update_category_view.php';
-        break;
+ case 'update':
+    $id = $_GET['id'];
+    
+    // 1. If form is submitted, handle the update logic
+    if (isset($_POST['submit'])) {
+        $title = cleanInput($_POST['title']);
+        $active = $_POST['active'];
+        
+        // Fetch current data to get existing image name
+        $currentCategory = $categoryModel->getById($id);
+        $image = $currentCategory['image_name'];
 
+        // If a new image is uploaded, process it
+        if ($_FILES['image']['name'] != "") {
+            $image = handleImageUpload($_FILES['image'], 'category');
+        }
+
+        if ($categoryModel->update($id, $title, $image, $active, $_SESSION['user_id'])) {
+            redirect('Controller/Category_Controller.php?action=manage&msg=updated');
+        }
+    }
+
+    // 2. Fetch the category to populate the view fields
+    $category = $categoryModel->getById($id);
+    
+    // 3. Load the view
+    include '../view/update_category_view.php';
+    break;
+    
     case 'delete':
         $category = $categoryModel->getById($id);
         if ($category) {
