@@ -173,3 +173,56 @@ BEGIN
 END //
 
 DELIMITER ;
+
+DELIMITER //
+
+-- 1. Get all foods with Category Titles for the Manage View
+CREATE PROCEDURE GetManageFoods()
+BEGIN
+    SELECT f.*, c.title AS category_title 
+    FROM foods f 
+    LEFT JOIN category c ON f.category_id = c.id 
+    ORDER BY f.id DESC;
+END //
+
+-- 2. Add new food
+CREATE PROCEDURE AddFood(
+    IN p_code VARCHAR(20),
+    IN p_title VARCHAR(150),
+    IN p_desc TEXT,
+    IN p_price DECIMAL(10,2),
+    IN p_image VARCHAR(255),
+    IN p_cat_id INT,
+    IN p_active VARCHAR(10),
+    IN p_admin_id INT
+)
+BEGIN
+    INSERT INTO foods (food_code, title, description, price, image_name, category_id, active, created_by, updated_by)
+    VALUES (p_code, p_title, p_desc, p_price, p_image, p_cat_id, p_active, p_admin_id, p_admin_id);
+END //
+
+-- 3. Update existing food
+CREATE PROCEDURE UpdateFood(
+    IN p_id INT,
+    IN p_title VARCHAR(150),
+    IN p_desc TEXT,
+    IN p_price DECIMAL(10,2),
+    IN p_image VARCHAR(255),
+    IN p_cat_id INT,
+    IN p_active VARCHAR(10),
+    IN p_admin_id INT
+)
+BEGIN
+    UPDATE foods SET 
+        title = p_title, 
+        description = p_desc, 
+        price = p_price, 
+        image_name = p_image, 
+        category_id = p_cat_id, 
+        active = p_active, 
+        updated_by = p_admin_id 
+    WHERE id = p_id;
+END //
+
+DELIMITER ;
+
