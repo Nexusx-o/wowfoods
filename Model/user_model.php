@@ -32,4 +32,12 @@ class UserModel {
         $stmt = $this->conn->prepare("DELETE FROM `user` WHERE id = :id");
         return $stmt->execute([':id' => $id]);
     }
+
+    public function resetPassword($id, $newPasswordHash) {
+    $stmt = $this->conn->prepare("CALL ResetUserPassword(:id, :pass)");
+    return $stmt->execute([
+        ':id' => $id,
+        ':pass' => $newPasswordHash
+    ]);
+}
 }

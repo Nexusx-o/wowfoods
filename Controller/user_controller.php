@@ -55,6 +55,19 @@ switch ($action) {
         redirect('Controller/User_Controller.php?action=manage');
         break;
 
+    case 'reset_password':
+    // Define your default password
+    $defaultPassword = "WowFood123"; 
+    $hashedPassword = password_hash($defaultPassword, PASSWORD_DEFAULT);
+
+    if ($id) {
+        if ($userModel->resetPassword($id, $hashedPassword)) {
+            // Redirect with a success message
+            redirect('Controller/User_Controller.php?action=manage&msg=pw_reset');
+        }
+    }
+    break;
+
     default:
         $users = $userModel->getAll();
         include '../view/manage_user_view.php';

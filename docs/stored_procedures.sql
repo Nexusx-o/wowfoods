@@ -310,3 +310,14 @@ END //
 
 DELIMITER ;
 
+DELIMITER //
+
+CREATE PROCEDURE ResetUserPassword(
+    IN p_id INT,
+    IN p_pass VARCHAR(255)
+)
+BEGIN
+    UPDATE `user` SET password = p_pass WHERE id = p_id;
+END //
+
+DELIMITER ;
