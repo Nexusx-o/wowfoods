@@ -10,21 +10,25 @@ class OrderModel {
     }
 
     /**
-     * Order ID එක අනුව අදාළ කෑම වර්ග සහ ප්‍රමාණයන් ලබා ගැනීම
+     * Stored Procedure එක භාවිතා කර Order Items ලබා ගැනීම
      */
     public function getOrderItems($order_id) {
         try {
-            $sql = "SELECT oi.quantity, oi.unit_price, f.title 
-                    FROM order_items oi 
-                    JOIN foods f ON oi.food_id = f.id 
-                    WHERE oi.order_id = :order_id";
-
+            // Stored Procedure එක CALL කිරීම
+            $sql = "CALL GetOrderItemsDetails(:order_id)";
+            
             $stmt = $this->db->prepare($sql);
             $stmt->execute(['order_id' => (int)$order_id]);
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            // Cursor එක close කිරීම අනිවාර්ය වේ (පසුකාලීන Queries වල දෝෂ මඟහැරීමට)
+            $stmt->closeCursor();
+
+            return $result;
             
         } catch (PDOException $e) {
-            error_log("Fetch Items Error: " . $e->getMessage());
+            error_log("Stored Procedure Fetch Items Error: " . $e->getMessage());
             return false;
         }
     }
