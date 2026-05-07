@@ -95,7 +95,7 @@
                         </div>
 
                         <?php if (isset($_SESSION['customer_id'])): ?>
-                            <a href="../controller/cart_view_controller.php" class="btn btn-danger w-100 rounded-pill fw-bold">Show Cart</a>
+                            <a href="../Controller/cart_view_controller.php" class="btn btn-danger w-100 rounded-pill fw-bold">Show Cart</a>
                         <?php else: ?>
                             <a href="../login.php" class="btn btn-dark w-100 rounded-pill fw-bold">Login to Order</a>
                         <?php endif; ?>
