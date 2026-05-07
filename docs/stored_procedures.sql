@@ -273,3 +273,40 @@ END //
 
 DELIMITER ;
 
+DELIMITER //
+
+-- 1. Get all orders with Customer Name for the Manage View
+CREATE PROCEDURE GetAllOrders()
+BEGIN
+    SELECT o.*, c.first_name, c.last_name 
+    FROM orders o 
+    JOIN customers c ON o.customer_id = c.id 
+    ORDER BY o.created_at DESC;
+END //
+
+-- 2. Get a single order with detailed customer info
+CREATE PROCEDURE GetOrderDetails(IN p_id INT)
+BEGIN
+    SELECT o.*, c.first_name, c.last_name, c.email AS cust_email 
+    FROM orders o 
+    JOIN customers c ON o.customer_id = c.id 
+    WHERE o.id = p_id;
+END //
+
+-- 3. Update Order and Payment Status
+CREATE PROCEDURE UpdateOrder(
+    IN p_id INT,
+    IN p_status VARCHAR(50),
+    IN p_pay_status VARCHAR(50),
+    IN p_admin_id INT
+)
+BEGIN
+    UPDATE orders SET 
+        status = p_status, 
+        payment_status = p_pay_status, 
+        updated_by = p_admin_id 
+    WHERE id = p_id;
+END //
+
+DELIMITER ;
+

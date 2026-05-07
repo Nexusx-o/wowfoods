@@ -56,7 +56,7 @@
                 <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
                     <div class="card-header bg-white border-bottom py-3 d-flex justify-content-between align-items-center">
                         <h5 class="mb-0 fw-bold"><i class="fas fa-shopping-bag text-danger me-2"></i>Recent Orders</h5>
-                        <a href="../view/manage_order_view.php" class="btn btn-sm btn-outline-danger rounded-pill">View All</a>
+                        <a href="../controller/order_controller.php" class="btn btn-sm btn-outline-danger rounded-pill">View All</a>
                     </div>
                     <div class="card-body p-0">
                         <div class="table-responsive">
