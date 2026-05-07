@@ -9,14 +9,31 @@ class CartModel {
         $this->db = $dbConnection;
     }
 
-    // Food ID එක අනුව විස්තර ලබා ගැනීම
+    /**
+     * Stored Procedure එක භාවිතා කර කෑමේ විස්තර ලබා ගැනීම
+     */
     public function getFoodForCart($food_id) {
-        $stmt = $this->db->prepare("SELECT title, price, image_name FROM foods WHERE id = ?");
-        $stmt->execute([(int)$food_id]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        try {
+            // Stored Procedure එක CALL කිරීම
+            $stmt = $this->db->prepare("CALL GetFoodDetailsForCart(?)");
+            $stmt->execute([(int)$food_id]);
+            
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            /**
+             * වැදගත්: සමහර විට Procedure එකක් පාවිච්චි කළ පසු තවත් Query එකක් 
+             * එකම connection එකේ කිරීමට පෙර cursor එක close කළ යුතුයි.
+             */
+            $stmt->closeCursor(); 
+            
+            return $result;
+        } catch (PDOException $e) {
+            error_log("Stored Procedure Error: " . $e->getMessage());
+            return false;
+        }
     }
 
-    // මුළු මුදල ගණනය කිරීම
+    // මුළු මුදල ගණනය කිරීම (මෙය PHP මගින් කිරීම වඩාත් කාර්යක්ෂමයි)
     public function calculateGrandTotal($cart) {
         $total = 0;
         if (!empty($cart)) {
