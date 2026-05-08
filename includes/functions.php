@@ -21,9 +21,29 @@ function generateUniqueCode(mysqli $conn, string $table, string $column, string 
     return $code;
 }
 
-function generateOrderNumber(mysqli $conn): string
-{
-    return generateUniqueCode($conn, 'orders', 'order_number', 'ORD', 8);
+//function generateOrderNumber(mysqli $conn): string
+//{
+    //return generateUniqueCode($conn, 'orders', 'order_number', 'ORD', 8);
+//}
+
+// includes/functions.php
+
+/**
+ * PDO භාවිතා කර අලුත් Order Number එකක් සෑදීම
+ */
+function generateOrderNumber($pdo) {
+    // අන්තිමටම ඇතුළත් කළ Order එකේ ID එක ලබා ගැනීම
+    $stmt = $pdo->query("SELECT id FROM orders ORDER BY id DESC LIMIT 1");
+    $lastOrder = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($lastOrder) {
+        $nextId = $lastOrder['id'] + 1;
+    } else {
+        $nextId = 1;
+    }
+
+    // උදාහරණ: ORD-2026-0001 වැනි ආකාරයට සකස් කිරීම
+    return "ORD-" . date("Y") . "-" . str_pad($nextId, 4, "0", STR_PAD_LEFT);
 }
 
 function formatFullName(string $firstName, string $lastName): string
