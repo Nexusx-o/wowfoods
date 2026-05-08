@@ -9,8 +9,8 @@
                 <div class="col-md-4 mb-4">
                     <h5 class="fw-bold mb-3 text-uppercase small">Quick Links</h5>
                     <ul class="list-unstyled">
-                        <li class="mb-2"><a href="index.php" class="text-secondary text-decoration-none hover-red">Home</a></li>
-                        <li class="mb-2"><a href="menu.php" class="text-secondary text-decoration-none hover-red">Our Menu</a></li>
+                        <li class="mb-2"><a href="../index.php" class="text-secondary text-decoration-none hover-red">Home</a></li>
+                        <li class="mb-2"><a href="../controller/menu_view_controller.php" class="text-secondary text-decoration-none hover-red">Our Menu</a></li>
                         <li class="mb-2"><a href="#" class="text-secondary text-decoration-none hover-red">Terms of Service</a></li>
                         <li class="mb-2"><a href="#" class="text-secondary text-decoration-none hover-red">Privacy Policy</a></li>
                     </ul>

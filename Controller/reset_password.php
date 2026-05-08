@@ -6,10 +6,12 @@ require_once __DIR__ . '/../model/auth_model.php';
 
 $error = '';
 $message = '';
+
+// Capture token from URL (GET) or Form (POST)
 $token = $_GET['token'] ?? $_POST['token'] ?? '';
 
 if (empty($token)) {
-    header("Location: ../login.php"); // Path adjustment for redirect
+    header("Location: " . SITEURL . "login.php");
     exit();
 }
 
@@ -21,7 +23,7 @@ try {
     // 1. Check if token exists and is valid
     $reset = $authModel->verifyResetToken($token);
 
-    if (!$reset || $reset['used'] || strtotime($reset['expires_at']) < time()) {
+    if (!$reset || (isset($reset['used']) && $reset['used'] == 1) || strtotime($reset['expires_at']) < time()) {
         $error = 'This password reset link is invalid or has expired.';
     } else {
         // 2. Handle the Form Submission
@@ -45,7 +47,9 @@ try {
                 );
 
                 if ($result) {
-                    $message = 'Your password has been reset successfully. You can now log in.';
+                    $message = 'Your password has been reset successfully!';
+                    // Note: Do NOT use header("Location...") here, 
+                    // because we need the page to load to show the Javascript popup.
                 } else {
                     $error = 'Failed to update password. Please contact support.';
                 }
@@ -56,4 +60,5 @@ try {
     $error = "A system error occurred. Please try again later.";
 }
 
-include '../view/reset_password_view.php';
+// 4. Load the View
+include __DIR__ . '/../view/reset_password_view.php';
