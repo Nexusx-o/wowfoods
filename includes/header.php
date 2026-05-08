@@ -53,7 +53,7 @@
         <span class="user-greeting">Hi, <?php echo htmlspecialchars($firstName); ?>!</span>
     </li>
     <li class="nav-item">
-        <a class="nav-link btn-login ms-lg-3" href="../logout.php">Logout</a>
+        <a class="nav-link btn-login ms-lg-3" href="../Controller/logout_controller.php">Logout</a>
     </li>
 
 <?php elseif(isset($_SESSION['admin_id'])): ?>
@@ -61,7 +61,7 @@
         <a class="nav-link px-3" href="admin_dashboard_controller.php">Dashboard</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link btn-login ms-lg-3" href="../logout.php">Logout</a>
+        <a class="nav-link btn-login ms-lg-3" href="../Controller/logout_controller.php">Logout</a>
     </li>
                             
                         <?php else: ?>
