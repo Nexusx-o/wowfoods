@@ -1,6 +1,4 @@
 <?php
-// controller/logout_controller.php
-require_once '../config/init.php'; // This should include your session file
+require_once '../config/init.php';
 
-// Simply call the function
 logout();

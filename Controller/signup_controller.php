@@ -1,5 +1,4 @@
 <?php
-// controller/signup_controller.php
 require_once '../config/init.php';
 require_once '../model/signup_model.php';
 
@@ -8,12 +7,10 @@ $success_message = "";
 $database = new Database();
 $db = $database->getConnection();
 
-// Initialize variables for "Sticky" form fields
-// Added $first_name and $last_name here
 $first_name = $last_name = $email = $phone = $address = $city = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
-    // 1. Collect and Sanitization
+    // Collect and Sanitization
     $first_name = cleanInput($_POST['first_name']);
     $last_name  = cleanInput($_POST['last_name']);
     $email      = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
@@ -23,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     $password   = $_POST['password'];
     $confirm    = $_POST['confirm_password'];
 
-    // 2. Validation Logic
+    // Validation Logic
     if (empty($first_name) || empty($last_name) || empty($email) || empty($phone) || empty($password)) {
         $error_message = "All required fields must be filled.";
     }
@@ -43,8 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
         $error_message = "Passwords do not match.";
     }
 else {
-        // 3. Model Interaction
-        // Assuming $pdo is defined in your init.php/config
+        // 3. Model 
         $customerModel = new CustomerModel($db);
 
         try {

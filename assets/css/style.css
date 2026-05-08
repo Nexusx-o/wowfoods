@@ -65,7 +65,7 @@ body {
 }
 
 .hover-red:hover {
-    color: #E63946 !important; /* WOW Red */
+    color: #E63946 !important;
     transition: 0.3s;
 }
 
@@ -153,7 +153,6 @@ footer h5 {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Add a little wiggle to invalid fields to grab attention */
 .is-invalid {
     animation: shake 0.2s ease-in-out 0s 2;
 }
@@ -165,13 +164,11 @@ footer h5 {
     100% { margin-left: 0rem; }
 }
 
-/* 1. Remove the browser's default eye icon (Edge/Chrome) */
 input::-ms-reveal,
 input::-ms-clear {
     display: none;
 }
 
-/* 2. Position our custom icon inside the input */
 .position-relative {
     position: relative;
 }
@@ -189,16 +186,15 @@ input::-ms-clear {
 }
 
 .password-toggle-icon:hover {
-    color: #dc3545; /* WOWFOOD Red */
+    color: #dc3545;
 }
 
-/* 3. Add padding to input so text doesn't overlap the icon */
 .password-field {
     padding-right: 40px !important;
 }                                                                   
 
 .swal2-styled.swal2-confirm {
-    background-color: #E63946 !important; /* WowFood Red */
+    background-color: #E63946 !important;
     border-radius: 50px !important;
     padding: 10px 30px !important;
 }

@@ -24,7 +24,7 @@ class MenuModel {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Getting details of a specific dish (for the cart)
+    // Getting details of a specific dish
     public function getFoodById($id) {
         $stmt = $this->db->prepare("SELECT id, title, price, image_name FROM foods WHERE id = ?");
         $stmt->execute([(int)$id]);

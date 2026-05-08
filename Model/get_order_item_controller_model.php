@@ -20,7 +20,6 @@ class OrderModel {
             
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            // It is mandatory to close the cursor 
             $stmt->closeCursor();
 
             return $result;

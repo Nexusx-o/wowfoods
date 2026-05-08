@@ -1,7 +1,7 @@
 <?php
 require_once '../config/init.php';
 require_once '../Model/Category_Model.php';
-checkAdmin(); // Security from session.php
+checkAdmin();
 
 $database = new Database();
 $db = $database->getConnection();
@@ -28,7 +28,7 @@ switch ($action) {
  case 'update':
     $id = $_GET['id'];
     
-    // 1. If form is submitted, handle the update logic
+    // If form is submitted, handle the update logic
     if (isset($_POST['submit'])) {
         $title = cleanInput($_POST['title']);
         $active = $_POST['active'];
@@ -47,10 +47,10 @@ switch ($action) {
         }
     }
 
-    // 2. Fetch the category to populate the view fields
+    // Fetch the category to populate the view fields
     $category = $categoryModel->getById($id);
     
-    // 3. Load the view
+    // Load the view
     include '../view/update_category_view.php';
     break;
     
@@ -63,7 +63,7 @@ switch ($action) {
         redirect('Controller/Category_Controller.php?action=manage&msg=deleted');
         break;
 
-    default: // Manage
+    default:
         $categories = $categoryModel->getAll();
         include '../view/manage_category_view.php';
         break;

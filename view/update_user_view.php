@@ -1,5 +1,4 @@
 <?php 
-// Header includes your standard CSS, Fonts, and Navigation
 include '../includes/header.php'; 
 ?>
 

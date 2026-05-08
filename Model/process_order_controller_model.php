@@ -37,7 +37,7 @@ class OrderModel {
                     ':qty'        => $item['qty'],
                     ':unit_price' => $item['price']
                 ]);
-                $stmt_items->closeCursor(); // Close the cursor inside the loop
+                $stmt_items->closeCursor();
             }
 
             $this->db->commit();

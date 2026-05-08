@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../config/init.php'; 
 require_once __DIR__ . '/../Model/process_order_controller_model.php';
-require_once __DIR__ . '/../includes/functions.php'; // generateOrderNumber සඳහා
+require_once __DIR__ . '/../includes/functions.php';
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['customer_id'])) {
@@ -11,7 +11,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['customer_id'])) {
     $db = $database->getConnection();
     $orderModel = new OrderModel($db);
 
-    // Data preparation
     $orderData = [
         'order_number' => generateOrderNumber($db), 
         'customer_id'  => $_SESSION['customer_id'],
@@ -28,14 +27,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['customer_id'])) {
         exit();
     }
 
-    //  Placing an order
     $isSuccess = $orderModel->placeOrder($orderData, $cartItems);
 
     if ($isSuccess) {
-        // Emptying the Cart
         unset($_SESSION['cart']);
-
-        // Success message
        include __DIR__ . '/../view/order_success_view.php'; 
     } else {
         echo "<script>alert('Something went wrong. Please try again.'); window.history.back();</script>";
