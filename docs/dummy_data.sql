@@ -67,5 +67,9 @@ INSERT INTO `password_resets` (`account_type`, `account_id`, `token`, `expires_a
 ('customer', 1, 'abc123token789xyz', DATE_ADD(NOW(), INTERVAL 1 HOUR));
 
 UPDATE `user` 
-SET `password` = '$2y$10$8K1p/9ocS2DfXfR.9XfR.u7Z7V8W9X0Y1Z2a3b4c5d6e7f8g9h1i2' 
+SET `password` = '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi' 
 WHERE `username` = 'admin';
+
+UPDATE `customers` 
+SET `password` = '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi' 
+WHERE `email` = 'alice@gmail.com';
