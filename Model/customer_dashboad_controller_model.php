@@ -1,7 +1,5 @@
 <?php
-/**
- * OrderModel - Handles retrieval of order data
- */
+
 class OrderModel {
     private $db;
 
@@ -9,9 +7,9 @@ class OrderModel {
         $this->db = $dbConnection;
     }
 
-    /**
-     * නිශ්චිත පාරිභෝගිකයෙකුට අදාළ සියලුම ඇණවුම් ලබා ගැනීම
-     */
+    
+     // Retrieving all orders related to a specific customer
+     
     public function getOrdersByCustomerId($customer_id) {
         try {
             $stmt = $this->db->prepare("SELECT * FROM orders WHERE customer_id = ? ORDER BY created_at DESC");

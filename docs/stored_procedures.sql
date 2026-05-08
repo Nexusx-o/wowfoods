@@ -26,6 +26,9 @@ BEGIN
         foods f ON oi.food_id = f.id 
     WHERE 
         oi.order_id = p_order_id;
+        
+
+
 -- Stored Procedure to Create Customer Record
 
 DELIMITER //
@@ -48,13 +51,16 @@ DELIMITER ;
 
 DELIMITER //
 
--- 1. සියලුම සක්‍රීය Categories ලබා ගැනීමට
+
+
+-- To get all active categories
 CREATE PROCEDURE GetAllActiveCategories()
 BEGIN
     SELECT id, title FROM category WHERE active = 'Yes';
 END //
 
--- 2. Foods ලබා ගැනීමට (Category ID එක 0 නම් සියල්ල ලබා දේ)
+--  To get Foods (if Category ID is 0 then all are given)
+
 CREATE PROCEDURE GetActiveFoods(IN p_category_id INT)
 BEGIN
     IF p_category_id > 0 THEN
@@ -64,7 +70,7 @@ BEGIN
     END IF;
 END //
 
--- 3. ID එක අනුව කෑමක විස්තර ලබා ගැනීමට
+-- To get details of a dish by ID
 CREATE PROCEDURE GetFoodDetailsById(IN p_food_id INT)
 BEGIN
     SELECT id, title, price, image_name FROM foods WHERE id = p_food_id;
@@ -97,11 +103,11 @@ BEGIN
         p_address, p_phone
     );
 
-    -- අලුතින් සෑදුණු ID එක ලබා ගැනීම
+    -- Getting the newly created ID
     SET p_order_id = LAST_INSERT_ID();
 END //
 
--- 2. අයිතම ඇතුළත් කිරීම සඳහා තවත් Procedure එකක් (විකල්ප)
+--  Another procedure for entering items
 CREATE PROCEDURE AddOrderItem(
     IN p_order_id INT,
     IN p_food_id INT,
@@ -123,14 +129,14 @@ CREATE PROCEDURE sp_ResetPassword(
     IN p_new_password VARCHAR(255)
 )
 BEGIN
-    -- 1. Update the correct account table
+    --  Update the correct account table
     IF p_account_type = 'user' THEN
         UPDATE `user` SET password = p_new_password WHERE id = p_account_id;
     ELSE
         UPDATE customers SET password = p_new_password WHERE id = p_account_id;
     END IF;
 
-    -- 2. Invalidate the token so it can't be used again
+    --  Invalidate the token so it can't be used again
     UPDATE password_resets SET used = 1 WHERE token = p_token;
 END
 
