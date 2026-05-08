@@ -29,10 +29,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Redirect based on origin
                 if ($user['account_origin'] === 'user') {
                     $_SESSION['user_id'] = $user['id'];
-                    redirect('admin/dashboard.php');
+                    redirect('controller/menu_view_controller.php');
                 } else {
                     $_SESSION['customer_id'] = $user['id'];
-                    redirect('public/menu.php');
+                    redirect('controller/admin_dashboard_controller.php');
                 }
                 exit();
             } else {
