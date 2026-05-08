@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['food_id'])) {
 if (isset($_GET['remove'])) {
     $remove_id = (int)$_GET['remove'];
     unset($_SESSION['cart'][$remove_id]);
-    header("Location: MenuController.php");
+    header("Location: menu_view_controller.php");
     exit();
 }
 

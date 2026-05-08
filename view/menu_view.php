@@ -81,7 +81,7 @@
                             </div>
                             <div class="text-end">
                                 <p class="mb-0 small fw-bold">$<?php echo number_format($subtotal, 2); ?></p>
-                                <a href="menu_view.php?remove=<?php echo $id; ?>" class="text-danger small">
+                                <a href="../Controller/menu_view_controller.php?remove=<?php echo $id; ?>" class="text-danger small">
                                     <i class="fas fa-times"></i>
                                 </a>
                             </div>
