@@ -159,3 +159,5 @@ CREATE TABLE IF NOT EXISTS `order_items` (
   CONSTRAINT `fk_item_order` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_item_food` FOREIGN KEY (`food_id`) REFERENCES `foods` (`id`)
 ) ENGINE = InnoDB;
+
+ALTER TABLE `orders` MODIFY COLUMN `status` VARCHAR(50) DEFAULT 'Ordered';
