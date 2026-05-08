@@ -6,13 +6,13 @@ class HomeMenuModel {
         $this->conn = $db;
     }
 
-    // Categories ලබා ගැනීම
+    // Getting Categories
     public function getAllCategories() {
         try {
             $stmt = $this->conn->prepare("CALL GetAllActiveCategories()");
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            $stmt->closeCursor(); // වැදගත්: Connection එක නිදහස් කිරීමට
+            $stmt->closeCursor();
             return $result;
         } catch (PDOException $e) {
             error_log("Error in getAllCategories SP: " . $e->getMessage());
@@ -20,7 +20,7 @@ class HomeMenuModel {
         }
     }
 
-    // Foods ලබා ගැනීම
+    // Getting Foods
     public function getFoods($category_id = 0) {
         try {
             $stmt = $this->conn->prepare("CALL GetActiveFoods(?)");
@@ -34,7 +34,7 @@ class HomeMenuModel {
         }
     }
 
-    // ID එක අනුව කෑමක් ලබා ගැනීම
+    // Getting food by ID
     public function getFoodById($id) {
         try {
             $stmt = $this->conn->prepare("CALL GetFoodDetailsById(?)");

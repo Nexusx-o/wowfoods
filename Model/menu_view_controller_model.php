@@ -1,7 +1,5 @@
 <?php
-/**
- * MenuModel - Database interactions for Foods and Categories
- */
+
 class MenuModel {
     private $db;
 
@@ -9,13 +7,13 @@ class MenuModel {
         $this->db = $dbConnection;
     }
 
-    // සියලුම සක්‍රීය Categories ලබා ගැනීම
+    // Getting all active categories
     public function getAllCategories() {
         $stmt = $this->db->query("SELECT id, title FROM category WHERE active='Yes'");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Category එක අනුව හෝ සියලුම කෑම වර්ග ලබා ගැනීම
+    // Get all types of food or by category
     public function getFoods($category_id = 0) {
         if ($category_id > 0) {
             $stmt = $this->db->prepare("SELECT * FROM foods WHERE category_id = ? AND active = 'Yes'");
@@ -26,7 +24,7 @@ class MenuModel {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // නිශ්චිත කෑමක විස්තර ලබා ගැනීම (Cart එක සඳහා)
+    // Getting details of a specific dish (for the cart)
     public function getFoodById($id) {
         $stmt = $this->db->prepare("SELECT id, title, price, image_name FROM foods WHERE id = ?");
         $stmt->execute([(int)$id]);

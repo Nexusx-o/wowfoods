@@ -1,7 +1,5 @@
 <?php
-/**
- * CheckoutModel - Handles data logic for the checkout process
- */
+
 class CheckoutModel {
     private $db;
 
@@ -9,9 +7,8 @@ class CheckoutModel {
         $this->db = $dbConnection;
     }
 
-    /**
-     * කරත්තයේ ඇති අයිතමවල මුළු මුදල ගණනය කිරීම
-     */
+    
+     // Calculating the total amount of items in the cart 
     public function calculateTotal($cart) {
         $total = 0;
         if (!empty($cart)) {
@@ -22,7 +19,5 @@ class CheckoutModel {
         return $total;
     }
 
-    // ඉදිරියේදී ඇණවුම ඩේටාබේස් එකට ඇතුළත් කිරීමට මෙහි function එකක් ලියාගත හැක
-    // public function placeOrder($customer_id, $total, $cart) { ... }
 }
 ?>
