@@ -17,7 +17,7 @@
         <nav class="navbar navbar-expand-lg fixed-top">
             <div class="container">
                 <!-- Logo -->
-                <a class="navbar-brand d-flex align-items-center" href="../public/index.php">
+                <a class="navbar-brand d-flex align-items-center" href="index.php">
                     <img src="../assets/images/logo.png" alt="Logo" width="40" class="me-2">
                     <span class="logo-text">WOWFOOD</span>
                 </a>
@@ -31,10 +31,10 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto align-items-center">
                         <li class="nav-item">
-                            <a class="nav-link px-3" href="../public/index.php">Home</a>
+                            <a class="nav-link px-3" href="../index.php">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link px-3" href="../public/menu.php">Menu</a>
+                            <a class="nav-link px-3" href="../controller/home_menu_view_controller.php">Menu</a>
                         </li>
                         
                         <?php if(isset($_SESSION['customer_id'])): 
@@ -57,7 +57,7 @@
                         <?php elseif(isset($_SESSION['user_id'])): ?>
                             <!-- Admin Links -->
                             <li class="nav-item">
-                                <a class="nav-link px-3" href="../admin/dashboard.php">Dashboard</a>
+                                <a class="nav-link px-3" href="admin_dashboard_controller.php">Dashboard</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link btn-login ms-lg-3" href="../logout.php">Logout</a>
@@ -66,7 +66,7 @@
                         <?php else: ?>
                             <!-- Guest Link -->
                             <li class="nav-item">
-                                <a class="nav-link btn-login ms-lg-3" href="../login.php">Login / Sign Up</a>
+                                <a class="nav-link btn-login ms-lg-3" href="../Controller/login_controller.php">Login / Sign Up</a>
                             </li>
                         <?php endif; ?>
                     </ul>
