@@ -33,6 +33,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['food_id'])) {
                 'qty' => 1
             ];
         }
+        $cat_id = isset($_POST['current_cat']) ? (int)$_POST['current_cat'] : 0;
+        header("Location: menu_view_controller.php" . ($cat_id > 0 ? "?cat_id=$cat_id" : ""));
+        exit();
     }
     header("Location: menu_view_controller.php" . (isset($_GET['cat_id']) ? "?cat_id=".$_GET['cat_id'] : ""));
     exit();

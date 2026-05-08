@@ -1,6 +1,10 @@
 <?php
 require_once('../config/init.php'); // Your DB connection and session start
+require_once '../model/auth_model.php';
 
+// 1. Initialize the database connection using your new Class
+$database = new Database();
+$pdo = $database->getConnection();
 // DATA FETCHING
 $categories = [];
 try {

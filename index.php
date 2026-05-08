@@ -25,9 +25,17 @@ include'config/database.php';
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="Controller/home_menu_view_controller.php">Menu</a></li>
-                <li class="nav-item"><a class="nav-link" href="controller/login_controller.php">Login</a></li>
-                <li class="nav-item ms-lg-3"><a class="btn btn-primary rounded-pill px-4" href="controller/menu_view.php">Order Now</a></li>
+                <!-- <li class="nav-item"><a class="nav-link" href="../controller/menu_view_controller.php">Menu</a></li> -->
+                <?php if (isset($_SESSION['user_id']) || isset($_SESSION['customer_id'])): ?>
+                    <li class="nav-item"><a class="nav-link text-warning" href="controller/customer_dashboard_controller.php">My Orders</a></li>
+                    <li class="nav-item"><a class="nav-link" href="controller/logout_controller.php">Logout</a></li>
+                <?php else: ?>
+                    <li class="nav-item"><a class="nav-link" href="controller/login_controller.php">Login</a></li>
+                <?php endif; ?>
+
+                <li class="nav-item ms-lg-3">
+                    <a class="btn btn-primary rounded-pill px-4" href="controller/menu_view_controller.php">Order Now</a>
+                </li>
             </ul>
         </div>
     </nav>
@@ -112,13 +120,15 @@ include'config/database.php';
         </div>
     </section>
 
-    <section class="py-5 bg-dark text-white text-center" style="background: linear-gradient(rgba(230, 57, 70, 0.9), rgba(230, 57, 70, 0.9)), url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1000'); background-size: cover; background-attachment: fixed;">
+    <?php if (!isset($_SESSION['user_id'])): ?>
+    <section class="py-5 bg-dark text-white text-center" ...>
         <div class="container py-5">
             <h2 class="display-4 fw-bold mb-4">Become a WOWFOOD Partner</h2>
             <p class="lead mb-4">Join our network of restaurants and reach thousands of hungry customers.</p>
-            <a href="register.php" class="btn btn-light btn-lg rounded-pill px-5 fw-bold">Join Us Today</a>
+            <a href="controller/signup_controller.php" class="btn btn-light btn-lg rounded-pill px-5 fw-bold">Join Us Today</a>
         </div>
     </section>
+    <?php endif; ?>
 
     <footer class="bg-dark text-white pt-5 pb-3">
         <div class="container text-center text-md-start">

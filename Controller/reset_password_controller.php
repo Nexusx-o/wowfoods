@@ -1,18 +1,21 @@
 <?php
-// reset-password.php
-require_once 'config/init.php';
-// require_once 'models/AuthModel.php';
+// Correct paths to jump out of Controller folder
+require_once __DIR__ . '/../config/init.php'; 
+require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../model/auth_model.php';
 
 $error = '';
 $message = '';
 $token = $_GET['token'] ?? $_POST['token'] ?? '';
 
 if (empty($token)) {
-    redirect('login.php');
+    header("Location: ../login.php"); // Path adjustment for redirect
     exit();
 }
 
-$authModel = new AuthModel($pdo);
+$database = new Database();
+$db = $database->getConnection();
+$authModel = new AuthModel($db);
 
 try {
     // 1. Check if token exists and is valid

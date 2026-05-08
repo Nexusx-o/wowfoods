@@ -34,39 +34,40 @@
                             <a class="nav-link px-3" href="../index.php">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link px-3" href="../controller/home_menu_view_controller.php">Menu</a>
+                            <a class="nav-link px-3" href="../controller/menu_view_controller.php">Menu</a>
                         </li>
                         
                         <?php if(isset($_SESSION['customer_id'])): 
-                            $fullName = $_SESSION['full_name'] ?? 'User';
-                            $firstName = explode(' ', trim($fullName))[0];
-                        ?>
-                            <!-- Customer Links -->
-                            <li class="nav-item">
-                                <a class="nav-link px-3 fw-bold text-danger" href="customer-dashboard.php">
-                                    <i class="fas fa-history me-1"></i> My Orders
-                                </a>
-                            </li>
-                            <li class="nav-item px-3">
-                                <span class="user-greeting">Hi, <?php echo htmlspecialchars($firstName); ?>!</span>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link btn-login ms-lg-3" href="../logout.php">Logout</a>
-                            </li>
-                        
-                        <?php elseif(isset($_SESSION['user_id'])): ?>
-                            <!-- Admin Links -->
-                            <li class="nav-item">
-                                <a class="nav-link px-3" href="admin_dashboard_controller.php">Dashboard</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link btn-login ms-lg-3" href="../logout.php">Logout</a>
-                            </li>
+    $fullName = $_SESSION['full_name'] ?? 'User';
+    $firstName = explode(' ', trim($fullName))[0];
+?>
+    <?php if(isset($_SESSION['role']) && strtolower($_SESSION['role']) !== 'admin'): ?>
+        <li class="nav-item">
+            <a class="nav-link px-3 fw-bold text-danger" href="customer-dashboard.php">
+                <i class="fas fa-history me-1"></i> My Orders
+            </a>
+        </li>
+    <?php endif; ?>
+
+    <li class="nav-item px-3">
+        <span class="user-greeting">Hi, <?php echo htmlspecialchars($firstName); ?>!</span>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link btn-login ms-lg-3" href="../logout.php">Logout</a>
+    </li>
+
+<?php elseif(isset($_SESSION['admin_id'])): ?>
+    <li class="nav-item">
+        <a class="nav-link px-3" href="admin_dashboard_controller.php">Dashboard</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link btn-login ms-lg-3" href="../logout.php">Logout</a>
+    </li>
                             
                         <?php else: ?>
                             <!-- Guest Link -->
                             <li class="nav-item">
-                                <a class="nav-link btn-login ms-lg-3" href="../Controller/login_controller.php">Login / Sign Up</a>
+                                <a class="nav-link btn-login ms-lg-3" href="../controller/login_controller.php">Login / Sign Up</a>
                             </li>
                         <?php endif; ?>
                     </ul>

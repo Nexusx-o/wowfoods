@@ -30,9 +30,9 @@ include('../includes/header.php');
                                     <tr>
                                         <td class="ps-4">
                                             <div class="d-flex align-items-center">
-                                                <img src="../assets/images/food/<?php echo htmlspecialchars($item['image']); ?>" 
-                                                     class="rounded-3 me-3" style="width: 60px; height: 60px; object-fit: cover;">
-                                                <span class="fw-bold"><?php echo htmlspecialchars($item['title']); ?></span>
+                                                <img src="../assets/images/food/<?php echo htmlspecialchars($item['image'] ?? 'default-food.jpg'); ?>" 
+                                                class="rounded-3 me-3" style="width: 60px; height: 60px; object-fit: cover;">
+                                                <span class="fw-bold"><?php echo htmlspecialchars($item['title'] ?? 'Default Food'); ?></span>
                                             </div>
                                         </td>
                                         <td>$<?php echo number_format($item['price'], 2); ?></td>
