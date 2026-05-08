@@ -1,5 +1,4 @@
 <?php 
-// Header එක ඇතුළත් කිරීම (ඔයා ලබාදුන් header.php)
 include ('../includes/header.php'); 
 ?>
 
@@ -65,6 +64,5 @@ function showLoginAlert() {
 </script>
 
 <?php 
-// Footer එක ඇතුළත් කිරීම (ඔයා ලබාදුන් footer.php)
 include '../includes/footer.php'; 
 ?>

@@ -1,5 +1,4 @@
 <?php 
-// Controller එක මගින් include කරන බැවින් header එක පමණක් එක් කරයි
 include('../includes/header.php'); 
 ?>
 

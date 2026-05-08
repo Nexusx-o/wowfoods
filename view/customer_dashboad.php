@@ -1,5 +1,4 @@
 <?php 
-// Header එක ඇතුළත් කිරීම
 include('../includes/header.php'); 
 ?>
 
@@ -123,7 +122,7 @@ document.querySelectorAll('.view-receipt-btn').forEach(button => {
         const orderId = this.dataset.id;
         const downloadBtn = document.getElementById('download-pdf');
         
-        // 1. Modal එකේ static දත්ත පිරවීම
+        //  Filling static data in the modal
         document.getElementById('modal-order-id').innerText = '#' + orderId;
         document.getElementById('modal-order-date').innerText = this.dataset.date;
         document.getElementById('modal-total').innerText = '$' + this.dataset.total;
@@ -135,9 +134,9 @@ document.querySelectorAll('.view-receipt-btn').forEach(button => {
         
         table.innerHTML = ''; 
         loader.style.display = 'block';
-        downloadBtn.disabled = true; // Items load වන තුරු PDF button එක disable කිරීම
+        downloadBtn.disabled = true; // Disabling the PDF button until items are loaded
 
-        // 2. AJAX call එක ඔබ පැවසූ නිවැරදි Path එකට සිදු කිරීම
+        //  AJAX call 
         fetch('../Controller/get_order_item_controller.php?order_id=' + orderId)
             .then(response => response.json())
             .then(data => {
@@ -150,7 +149,7 @@ document.querySelectorAll('.view-receipt-btn').forEach(button => {
                         </tr>`;
                         table.innerHTML += row;
                     });
-                    downloadBtn.disabled = false; // Items ලැබුණු පසු PDF button එක enable කිරීම
+                    downloadBtn.disabled = false; // Enabling the PDF button after receiving items
                 } else {
                     table.innerHTML = '<tr><td colspan="2" class="text-center py-2">No items found for this order.</td></tr>';
                 }

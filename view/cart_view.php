@@ -1,6 +1,5 @@
 <?php 
-// Do NOT require the controller here anymore. 
-// The controller is already including this file.
+
 include('../includes/header.php'); 
 ?>
 

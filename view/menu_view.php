@@ -1,6 +1,5 @@
-<?php include('../includes/header.php'); 
-      
-
+<?php 
+include('../includes/header.php'); 
 ?>
 
 <div class="container-fluid py-5 bg-light">
