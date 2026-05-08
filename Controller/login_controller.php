@@ -18,12 +18,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($user && (password_verify($password, $user['password']) || $password === $user['password'])) {
     
-    // 1. Set common session variables
+    // Set common session variables
     $_SESSION['first_name'] = $user['first_name'];
     $_SESSION['full_name'] = $user['first_name'] . ' ' . $user['last_name'];
 
-    // 2. Determine if the user is an Admin or a Customer
-    // We check if the 'role' key exists and if it is set to 'admin'
+    // Determine if the user is an Admin or a Customer
     if (isset($user['role']) && $user['role'] === 'Admin') {
         
         // --- ADMIN LOGIC ---
@@ -33,10 +32,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         redirect('controller/admin_dashboard_controller.php');
         
     } else {
-        
-        // --- CUSTOMER LOGIC ---
         $_SESSION['role'] = 'customer'; 
-        $_SESSION['customer_id'] = $user['id']; // Store customer's primary key
+        $_SESSION['customer_id'] = $user['id'];
         
         // Redirect to customer dashboard/menu
         redirect('controller/customer_dashboard_controller.php');
@@ -48,5 +45,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 }
 
-// 2. THIS MUST LOAD THE VIEW (HTML Form), NOT THE TEST CONTROLLER
 include '../view/login_view.php';

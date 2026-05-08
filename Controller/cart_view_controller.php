@@ -8,9 +8,6 @@ $database = new Database();
 $db = $database->getConnection();
 $cartModel = new CartModel($db);
 
-
-// --- logic Section ---
-
 //  ADD ITEM TO CART
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['food_id'])) {
     $food_id = (int)$_POST['food_id'];

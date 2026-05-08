@@ -90,7 +90,6 @@ include'config/database.php';
                             <div class="col-md-3">
                                 <div class="card category-card border-0 shadow-sm overflow-hidden">
                                     <?php 
-                                        // Simplified View Logic: Determine image source
                                         $image_path = !empty($cat['image_name']) 
                                             ? "images/category/" . $cat['image_name'] 
                                             : "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=500";

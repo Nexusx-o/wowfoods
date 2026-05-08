@@ -35,20 +35,15 @@ class UserModel {
 
 
     public function findAccountByEmail($email) {
-        // This single call now checks both tables thanks to the UNION
         $stmt = $this->conn->prepare("CALL sp_FindAccountByEmail(?)");
         $stmt->execute([$email]);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         $stmt->closeCursor(); 
 
-        return $result; // Returns ['id' => X, 'account_type' => 'user' OR 'customer'] or false
+        return $result;
     }
 
-    /**
- * Bridges the gap for the "Reset Password" action in the Controller
- */
 public function resetPassword($id, $hashedPassword) {
-    // This calls the ResetUserPassword stored procedure defined in your SQL
     $stmt = $this->conn->prepare("CALL ResetUserPassword(:id, :pass)");
     return $stmt->execute([
         ':id'   => $id,
@@ -57,7 +52,6 @@ public function resetPassword($id, $hashedPassword) {
 }
 
     public function createPasswordReset($type, $id, $token) {
-    // Safety check: if type is somehow still null, don't even try the SQL
     if (empty($type)) {
         error_log("Password reset failed: Account type is missing for ID " . $id);
         return false;

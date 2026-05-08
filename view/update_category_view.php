@@ -1,5 +1,4 @@
 <?php 
-// Header includes your CSS and navigation
 include '../includes/header.php'; 
 ?>
 

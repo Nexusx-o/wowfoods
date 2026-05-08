@@ -24,7 +24,7 @@ if (empty($cart)) {
     exit();
 }
 
-//Calculate the total amount (via the Model)
+// Calculate the total amount
 $total_amount = $checkoutModel->calculateTotal($cart);
 
 

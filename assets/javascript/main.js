@@ -6,15 +6,6 @@ window.addEventListener('scroll', function () {
         nav.classList.remove('bg-dark', 'shadow');
     }
 });
-/**
- * WOWFOOD Main JavaScript
- * Handles Signup Validation and UI interactions
- */
-
-/**
- * WOWFOOD Main JavaScript
- * Reorganized for Internal Password Toggles & Real-time Validation
- */
 
 document.addEventListener('DOMContentLoaded', function() {
     // 1. Password Visibility Toggle (Now targets the icon directly)
@@ -31,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
  * Handles clicking the eye icon inside the password fields
  */
 function initPasswordToggle() {
-    // Select the icons directly since we removed the button wrapper
+    
     const toggleIcons = document.querySelectorAll('.password-toggle-icon');
     
     toggleIcons.forEach(icon => {

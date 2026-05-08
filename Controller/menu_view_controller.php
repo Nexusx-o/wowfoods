@@ -1,5 +1,4 @@
 <?php
-
 require_once __DIR__ . '/../config/init.php'; 
 require_once __DIR__ . '/../Model/menu_view_controller_model.php';
 
@@ -7,10 +6,6 @@ require_once __DIR__ . '/../Model/menu_view_controller_model.php';
 $database = new Database();
 $db = $database->getConnection();
 $menuModel = new MenuModel($db);
-
-
-
-// LOGIC 
 
 //  ADD TO CART LOGIC
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['food_id'])) {

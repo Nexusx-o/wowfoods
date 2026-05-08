@@ -1,5 +1,4 @@
 <?php
-// Correct paths to jump out of Controller folder
 require_once __DIR__ . '/../config/init.php'; 
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../model/auth_model.php';
@@ -9,7 +8,7 @@ $message = '';
 $token = $_GET['token'] ?? $_POST['token'] ?? '';
 
 if (empty($token)) {
-    header("Location: ../login.php"); // Path adjustment for redirect
+    header("Location: ../login.php");
     exit();
 }
 
@@ -18,13 +17,13 @@ $db = $database->getConnection();
 $authModel = new AuthModel($db);
 
 try {
-    // 1. Check if token exists and is valid
+    // Check if token exists and is valid
     $reset = $authModel->verifyResetToken($token);
 
     if (!$reset || $reset['used'] || strtotime($reset['expires_at']) < time()) {
         $error = 'This password reset link is invalid or has expired.';
     } else {
-        // 2. Handle the Form Submission
+        // Handle the Form Submission
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $password = $_POST['password'] ?? '';
             $confirm  = $_POST['confirm_password'] ?? '';
@@ -34,7 +33,7 @@ try {
             } elseif ($password !== $confirm) {
                 $error = 'Passwords do not match.';
             } else {
-                // 3. Execution
+                // Execution
                 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
                 
                 $result = $authModel->performPasswordReset(

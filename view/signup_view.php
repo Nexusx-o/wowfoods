@@ -54,7 +54,6 @@
                                 placeholder="name@example.com"
                                 required 
                                 value="<?php echo isset($email) ? htmlspecialchars($email) : ''; ?>">
-                            <!-- This div will hold our real-time messages -->
                             <div id="emailFeedback" class="small mt-1"></div>
                         </div>
                         <div class="col-md-6">
@@ -68,7 +67,6 @@
                     </div>
 
                         <div class="row mb-3">
-                            <!-- Password Field -->
                             <div class="col-md-6">
                                 <label class="form-label small fw-bold">Password</label>
                                 <div class="position-relative">
@@ -78,7 +76,6 @@
                                 <div id="passwordFeedback"></div>
                             </div>
                             
-                            <!-- Confirm Password Field -->
                             <div class="col-md-6">
                                 <label class="form-label small fw-bold">Confirm Password</label>
                                 <div class="position-relative">

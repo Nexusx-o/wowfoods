@@ -1,5 +1,4 @@
 <?php
-// models/SignupModel.php
 
 class CustomerModel {
     private $pdo;

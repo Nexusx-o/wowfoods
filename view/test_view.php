@@ -1,5 +1,4 @@
 <?php 
-// Removed checkLogin() from here because the Controller handles it now.
 include '../includes/header.php'; 
 ?>
 

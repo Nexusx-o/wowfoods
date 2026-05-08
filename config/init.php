@@ -1,16 +1,10 @@
 <?php
-/**
- * Global Initialization File
- */
-
-// 1. Session Management
 // Point to the session.php file you created in the includes folder
 require_once __DIR__ . '/../includes/session.php'; 
 
-// 2. Load Database Connection
+// Load Database Connection
 require_once __DIR__ . '/database.php';
 
-// 3. Define Global Constants
 // Use __DIR__ to make paths more reliable across different environments
 define('SITEURL', 'http://localhost/WowFoods/'); 
 define('ASSETS_URL', SITEURL . 'assets/');

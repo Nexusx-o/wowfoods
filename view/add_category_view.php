@@ -1,5 +1,4 @@
 <?php 
-// We include the header which contains our CSS and Navigation
 include '../includes/header.php'; 
 ?>
 
@@ -65,6 +64,6 @@ include '../includes/header.php';
 </div>
 
 <?php 
-// Include the footer which closes the body and html tags
+
 include '../includes/footer.php'; 
 ?>

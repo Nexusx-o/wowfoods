@@ -63,7 +63,6 @@ switch ($action) {
         break;
 }
 
-// Reuse the image handler logic
 function handleImageUpload($file, $folder) {
     if (!isset($file['name']) || $file['name'] == "") return "";
     $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
