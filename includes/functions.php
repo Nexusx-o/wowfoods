@@ -21,9 +21,17 @@ function generateUniqueCode(mysqli $conn, string $table, string $column, string 
     return $code;
 }
 
-function generateOrderNumber(mysqli $conn): string
-{
-    return generateUniqueCode($conn, 'orders', 'order_number', 'ORD', 8);
+function generateOrderNumber($pdo) {
+    $stmt = $pdo->query("SELECT id FROM orders ORDER BY id DESC LIMIT 1");
+    $lastOrder = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($lastOrder) {
+        $nextId = $lastOrder['id'] + 1;
+    } else {
+        $nextId = 1;
+    }
+
+    return "ORD-" . date("Y") . "-" . str_pad($nextId, 4, "0", STR_PAD_LEFT);
 }
 
 function formatFullName(string $firstName, string $lastName): string

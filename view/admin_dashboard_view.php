@@ -12,13 +12,13 @@
                 <p class="text-muted">Welcome back, <?php echo htmlspecialchars($_SESSION['full_name']); ?>. Here is what's happening today.</p>
             </div>
             <div class="col-md-5 text-md-end align-self-center">
-                <a href="add-category.php" class="btn btn-outline-danger rounded-pill px-4 shadow-sm me-2">
+                <a href="../controller/category_controller.php" class="btn btn-outline-danger rounded-pill px-4 shadow-sm me-2">
                     <i class="fas fa-folder-plus me-2"></i>Add Category
                 </a>
-                <a href="add-food.php" class="btn btn-danger rounded-pill px-4 shadow-sm me-2">
+                <a href="../controller/food_controller.php?action=add" class="btn btn-danger rounded-pill px-4 shadow-sm me-2">
                     <i class="fas fa-hamburger me-2"></i>Add Food
                 </a>
-                <a href="add-user.php" class="btn btn-outline-dark rounded-pill px-4 shadow-sm">
+                <a href="../controller/user_controller.php?action=add" class="btn btn-outline-dark rounded-pill px-4 shadow-sm">
                     <i class="fas fa-user-plus me-2"></i>Add User
                 </a>
             </div>
@@ -56,7 +56,7 @@
                 <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
                     <div class="card-header bg-white border-bottom py-3 d-flex justify-content-between align-items-center">
                         <h5 class="mb-0 fw-bold"><i class="fas fa-shopping-bag text-danger me-2"></i>Recent Orders</h5>
-                        <a href="manage-order.php" class="btn btn-sm btn-outline-danger rounded-pill">View All</a>
+                        <a href="../controller/order_controller.php" class="btn btn-sm btn-outline-danger rounded-pill">View All</a>
                     </div>
                     <div class="card-body p-0">
                         <div class="table-responsive">
@@ -75,7 +75,7 @@
                                             <td class="ps-4 fw-bold text-dark">#<?php echo htmlspecialchars($order['id']); ?></td>
                                             <td><span class="badge bg-primary"><?php echo htmlspecialchars($order['status']); ?></span></td>
                                             <td class="text-center pe-4">
-                                                <a href="update-order.php?id=<?php echo htmlspecialchars($order['id']); ?>" class="btn btn-sm btn-dark rounded-pill px-3">
+                                                <a href="../view/update_order_view.php?id=<?php echo htmlspecialchars($order['id']); ?>" class="btn btn-sm btn-dark rounded-pill px-3">
                                                     Manage
                                                 </a>
                                             </td>

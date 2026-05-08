@@ -5,8 +5,9 @@
     <title>Reset Password | WOWFOOD</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo SITEURL; ?>assets/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-<body class="forgot-pwd-body"> <!-- Reusing the background from forgot-password -->
+<body class="forgot-pwd-body">
 
 <div class="container">
     <div class="row justify-content-center">
@@ -22,16 +23,27 @@
                 <?php endif; ?>
 
                 <?php if ($message): ?>
+                    <script>
+                        Swal.fire({
+                            title: 'Success!',
+                            text: '<?php echo $message; ?>',
+                            icon: 'success',
+                            confirmButtonColor: '#E63946',
+                            confirmButtonText: 'Login Now'
+                        }).then((result) => {
+                            // Redirect to login after clicking the button
+                            window.location.href = '<?php echo SITEURL; ?>controller/login_controller.php';
+                        });
+                    </script>
                     <div class="alert alert-success py-2 small text-center"><?php echo $message; ?></div>
                     <div class="text-center mt-3">
-                        <a href="login.php" class="btn btn-outline-dark rounded-pill px-4">Go to Login</a>
+                        <a href="<?php echo SITEURL; ?>controller/login_controller.php" class="btn btn-outline-dark rounded-pill px-4">Go to Login</a>
                     </div>
                 <?php endif; ?>
 
-                <!-- Show form only if there is no error and no success message -->
                 <?php if (!$error && !$message): ?>
-                    <form action="reset-password.php" method="POST">
-                        <input type="hidden" name="token" value="<?php echo htmlspecialchars($token); ?>">
+                    <form action="../controller/reset_password.php" method="POST">
+                        <input type="hidden" name="token" value="<?php echo htmlspecialchars($token ?? ''); ?>">
                         
                         <div class="mb-3">
                             <label class="form-label small fw-bold">New Password</label>
@@ -49,7 +61,7 @@
                 <?php endif; ?>
 
                 <div class="text-center mt-4">
-                    <a href="login.php" class="text-muted small text-decoration-none">Back to Login</a>
+                    <a href="<?php echo SITEURL; ?>login.php" class="text-muted small text-decoration-none">Back to Login</a>
                 </div>
             </div>
         </div>
