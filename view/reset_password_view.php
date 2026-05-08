@@ -30,8 +30,8 @@
 
                 <!-- Show form only if there is no error and no success message -->
                 <?php if (!$error && !$message): ?>
-                    <form action="reset-password.php" method="POST">
-                        <input type="hidden" name="token" value="<?php echo htmlspecialchars($token); ?>">
+                    <form action="../controller/reset_password.php" method="POST">
+                        <input type="hidden" name="token" value="<?php echo htmlspecialchars($token ?? ''); ?>">
                         
                         <div class="mb-3">
                             <label class="form-label small fw-bold">New Password</label>

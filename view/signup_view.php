@@ -28,12 +28,19 @@
                 </script>
             <?php endif; ?>
             <form action="../controller/signup_controller.php" method="POST">
-                <div class="mb-3">
-                    <label class="form-label small fw-bold">Full Name</label>
-                    <input type="text" name="full_name" class="form-control" 
-                        placeholder="John Doe"
-                        required 
-                        value="<?php echo isset($full_name) ? htmlspecialchars($full_name) : ''; ?>">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold">First Name</label>
+                        <input type="text" name="first_name" class="form-control" 
+                            placeholder="John" required 
+                            value="<?php echo isset($first_name) ? htmlspecialchars($first_name) : ''; ?>">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label small fw-bold">Last Name</label>
+                        <input type="text" name="last_name" class="form-control" 
+                            placeholder="Doe" required 
+                            value="<?php echo isset($last_name) ? htmlspecialchars($last_name) : ''; ?>">
+                    </div>
                 </div>
 
                 <div class="row mb-3">
