@@ -14,13 +14,15 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
             <h3 class="fw-bold mb-0">System <span class="text-danger">Users</span></h3>
-            <a href="../Controller/admin_dashboard_controller.php" class="btn btn-sm btn-outline-secondary rounded-pill px-3 mt-2">
-                <i class="fas fa-arrow-left me-1"></i> Dashboard
-            </a>
+            <p class="text-muted small">View and manage all users in the system.</p>
         </div>
+          <div>
+         <a href="../controller/admin_dashboard_controller.php?action=manage" class="btn btn-outline-secondary rounded-pill px-4">Back</a>
+
         <a href="User_Controller.php?action=add" class="btn btn-danger rounded-pill px-4 shadow-sm">
             <i class="fas fa-user-plus me-1"></i> Add User
         </a>
+        </div>
     </div>
 
     <div class="card border-0 shadow-sm rounded-4 overflow-hidden">

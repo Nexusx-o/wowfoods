@@ -9,9 +9,13 @@ include '../includes/header.php';
             <h3 class="fw-bold mb-0">Manage <span class="text-danger">Food Menu</span></h3>
             <p class="text-muted small">View and manage all dishes available on your menu.</p>
         </div>
+          <div>
+         <a href="../controller/admin_dashboard_controller.php?action=manage" class="btn btn-outline-secondary rounded-pill px-4">Back</a>
+
         <a href="../controller/Food_Controller.php?action=add" class="btn btn-danger rounded-pill px-4 shadow-sm">
             <i class="fas fa-plus me-2"></i>Add Food Item
         </a>
+        </div>
     </div>
 
     <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
