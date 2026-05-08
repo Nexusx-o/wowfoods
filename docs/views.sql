@@ -64,3 +64,22 @@ SELECT
     c.phone AS customer_phone
 FROM `orders` o
 JOIN `customers` c ON o.customer_id = c.id;
+
+USE `food_order`;
+
+-- This View combines food items with their category details
+-- It allows index.php to find categories that have active food items
+CREATE OR REPLACE VIEW `vw_food_details` AS
+SELECT 
+    f.id AS food_id,
+    f.food_code,
+    f.title AS food_title,
+    f.price,
+    f.image_name,
+    f.active,
+    f.category_id,
+    c.title AS category_name,
+    c.image_name AS category_image,
+    c.active AS category_active
+FROM `foods` f
+INNER JOIN `category` c ON f.category_id = c.id;
