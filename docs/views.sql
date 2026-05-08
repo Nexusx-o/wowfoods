@@ -50,3 +50,17 @@ SELECT
     c.title AS category_name  -- <--- This is the key your PHP must use
 FROM `foods` f
 LEFT JOIN `category` c ON f.category_id = c.id;
+
+USE `food_order`;
+
+-- Update the view to include separate first and last name columns
+CREATE OR REPLACE VIEW `vw_order_master` AS
+SELECT 
+    o.*, 
+    c.first_name, 
+    c.last_name,
+    CONCAT(c.first_name, ' ', c.last_name) AS customer_full_name, 
+    c.email AS customer_email,
+    c.phone AS customer_phone
+FROM `orders` o
+JOIN `customers` c ON o.customer_id = c.id;
