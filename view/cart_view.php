@@ -44,7 +44,7 @@ include('../includes/header.php');
                                         </td>
                                         <td class="text-danger fw-bold">$<?php echo number_format($subtotal, 2); ?></td>
                                         <td class="text-end pe-4">
-                                            <a href="cart_controller.php?remove=<?php echo $id; ?>" class="text-muted"><i class="fas fa-trash"></i></a>
+                                            <a href="../Controller/cart_view_controller.php?remove=<?php echo $id; ?>" class="text-muted"><i class="fas fa-trash"></i></a>
                                         </td>
                                     </tr>
                                     <?php endforeach; ?>

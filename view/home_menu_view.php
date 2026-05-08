@@ -60,7 +60,7 @@ include ('../includes/header.php');
 <script>
 function showLoginAlert() {
     alert("Please login to your account to order foods!");
-    window.location.href = "../view/login_view.php";
+    window.location.href = "../Controller/login_controller.php";
 }
 </script>
 

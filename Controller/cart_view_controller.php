@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['food_id'])) {
 if (isset($_GET['remove'])) {
     $remove_id = (int)$_GET['remove'];
     unset($_SESSION['cart'][$remove_id]);
-    header("Location: CartController.php");
+    header("Location: cart_view_controller.php");
     exit();
 }
 
@@ -58,7 +58,7 @@ if (isset($_POST['update_qty']) && isset($_POST['qty'])) {
             $_SESSION['cart'][$id]['qty'] = (int)$new_qty;
         }
     }
-    header("Location: CartController.php");
+    header("Location: cart_view_controller.php");
     exit();
 }
 
