@@ -31,10 +31,10 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto align-items-center">
                         <li class="nav-item">
-                            <a class="nav-link px-3" href="index.php">Home</a>
+                            <a class="nav-link px-3" href="../index.php">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link px-3" href="menu.php">Menu</a>
+                            <a class="nav-link px-3" href="../controller/home_menu_view_controller.php">Menu</a>
                         </li>
                         
                         <?php if(isset($_SESSION['customer_id'])): 
@@ -66,7 +66,7 @@
                         <?php else: ?>
                             <!-- Guest Link -->
                             <li class="nav-item">
-                                <a class="nav-link btn-login ms-lg-3" href="../login.php">Login / Sign Up</a>
+                                <a class="nav-link btn-login ms-lg-3" href="../Controller/login_controller.php">Login / Sign Up</a>
                             </li>
                         <?php endif; ?>
                     </ul>

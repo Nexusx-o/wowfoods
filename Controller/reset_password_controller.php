@@ -1,52 +1,51 @@
 <?php
 // reset-password.php
 require_once 'config/init.php';
+// require_once 'models/AuthModel.php';
 
 $error = '';
 $message = '';
 $token = $_GET['token'] ?? $_POST['token'] ?? '';
 
-// 1. Basic Token Check
 if (empty($token)) {
     redirect('login.php');
+    exit();
 }
 
+$authModel = new AuthModel($pdo);
+
 try {
-    // 2. Validate Token in Database
-    $stmt = $pdo->prepare("SELECT id, account_type, account_id, expires_at, used FROM password_resets WHERE token = ? LIMIT 1");
-    $stmt->execute([$token]);
-    $reset = $stmt->fetch();
+    // 1. Check if token exists and is valid
+    $reset = $authModel->verifyResetToken($token);
 
     if (!$reset || $reset['used'] || strtotime($reset['expires_at']) < time()) {
         $error = 'This password reset link is invalid or has expired.';
     } else {
-        // 3. Handle Form Submission
+        // 2. Handle the Form Submission
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $password = $_POST['password'] ?? '';
-            $confirm_password = $_POST['confirm_password'] ?? '';
+            $confirm  = $_POST['confirm_password'] ?? '';
 
-            if (empty($password) || empty($confirm_password)) {
-                $error = 'Please enter and confirm your new password.';
-            } elseif (strlen($password) < 8) {
+            if (empty($password) || strlen($password) < 8) {
                 $error = 'Password must be at least 8 characters long.';
-            } elseif ($password !== $confirm_password) {
+            } elseif ($password !== $confirm) {
                 $error = 'Passwords do not match.';
             } else {
-                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-                // Determine which table to update
-                $table = ($reset['account_type'] === 'user') ? 'user' : 'customers';
+                // 3. Execution
+                $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
                 
-                // Update User/Customer Password
-                $update_sql = "UPDATE $table SET password = ? WHERE id = ?";
-                $update_stmt = $pdo->prepare($update_sql);
-                $update_stmt->execute([$hashed_password, $reset['account_id']]);
+                $result = $authModel->performPasswordReset(
+                    $token, 
+                    $reset['account_type'], 
+                    $reset['account_id'], 
+                    $hashedPassword
+                );
 
-                // Mark Token as Used
-                $mark_used = $pdo->prepare("UPDATE password_resets SET used = 1 WHERE id = ?");
-                $mark_used->execute([$reset['id']]);
-
-                $message = 'Your password has been reset successfully. You can now log in.';
+                if ($result) {
+                    $message = 'Your password has been reset successfully. You can now log in.';
+                } else {
+                    $error = 'Failed to update password. Please contact support.';
+                }
             }
         }
     }
@@ -54,5 +53,4 @@ try {
     $error = "A system error occurred. Please try again later.";
 }
 
-// Load the Presentation layer
-include 'view/reset_password_view.php';
+include '../view/reset_password_view.php';

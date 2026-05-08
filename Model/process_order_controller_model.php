@@ -1,0 +1,58 @@
+<?php
+/**
+ * OrderModel - Handles order placement using Stored Procedures
+ */
+class OrderModel {
+    private $db;
+
+    public function __construct($dbConnection) {
+        $this->db = $dbConnection;
+    }
+
+    public function placeOrder($orderData, $cartItems) {
+        try {
+            $this->db->beginTransaction();
+
+            // 1. ප්‍රධාන ඇණවුම ඇතුළත් කර ID එක ලබා ගැනීම
+            // OUT parameter එකක් ඇති නිසා මෙහිදී SQL එක මදක් වෙනස් වේ
+            $sql_order = "CALL CreateNewOrder(:order_number, :customer_id, :total, :payment, :address, :phone, @order_id)";
+            $stmt_order = $this->db->prepare($sql_order);
+            $stmt_order->execute([
+                ':order_number' => $orderData['order_number'],
+                ':customer_id'  => $orderData['customer_id'],
+                ':total'        => $orderData['total'],
+                ':payment'      => $orderData['payment'],
+                ':address'      => $orderData['address'],
+                ':phone'        => $orderData['phone']
+            ]);
+            $stmt_order->closeCursor();
+
+            // SQL හරහා @order_id එක ලබා ගැනීම
+            $order_id = $this->db->query("SELECT @order_id AS id")->fetch(PDO::FETCH_ASSOC)['id'];
+
+            // 2. කරත්තයේ ඇති අයිතම ඇතුළත් කිරීම
+            $stmt_items = $this->db->prepare("CALL AddOrderItem(:order_id, :food_id, :qty, :unit_price)");
+
+            foreach ($cartItems as $food_id => $item) {
+                $stmt_items->execute([
+                    ':order_id'   => $order_id,
+                    ':food_id'    => $food_id,
+                    ':qty'        => $item['qty'],
+                    ':unit_price' => $item['price']
+                ]);
+                $stmt_items->closeCursor(); // වැදගත්: Loop එක තුළ Cursor එක Close කරන්න
+            }
+
+            $this->db->commit();
+            return true;
+
+        } catch (Exception $e) {
+            if ($this->db->inTransaction()) {
+                $this->db->rollBack();
+            }
+            error_log("Order Process SP Error: " . $e->getMessage());
+            return false;
+        }
+    }
+}
+?>

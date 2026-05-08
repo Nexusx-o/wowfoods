@@ -25,7 +25,7 @@ include'config/database.php';
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="controller/menu_view.php">Menu</a></li>
+                <li class="nav-item"><a class="nav-link" href="Controller/home_menu_view_controller.php">Menu</a></li>
                 <li class="nav-item"><a class="nav-link" href="controller/login_controller.php">Login</a></li>
                 <li class="nav-item ms-lg-3"><a class="btn btn-primary rounded-pill px-4" href="controller/menu_view.php">Order Now</a></li>
             </ul>
