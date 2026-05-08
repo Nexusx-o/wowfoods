@@ -6,7 +6,7 @@ CREATE SCHEMA IF NOT EXISTS `food_order` DEFAULT CHARACTER SET utf8mb4 COLLATE u
 USE `food_order`;
 
 -- -----------------------------------------------------
--- Table: user
+-- Table: user (Administrative Staff)
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `user` (
   `id` INT NOT NULL AUTO_INCREMENT,
@@ -57,14 +57,14 @@ CREATE TABLE IF NOT EXISTS `category` (
 ) ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table: customers (Updated with Password after Email)
+-- Table: customers
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `customers` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `first_name` VARCHAR(50) NOT NULL,
   `last_name` VARCHAR(50) NOT NULL,
   `email` VARCHAR(150) NOT NULL UNIQUE,
-  `password` VARCHAR(255) NOT NULL, -- Positioned per migration
+  `password` VARCHAR(255) NOT NULL,
   `phone` VARCHAR(20) NOT NULL,
   `address` VARCHAR(255) NOT NULL,
   `city` VARCHAR(100),
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `customers` (
 ) ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table: password_resets (Newly Created)
+-- Table: password_resets
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `password_resets` (
   `id` INT NOT NULL AUTO_INCREMENT,
@@ -96,14 +96,14 @@ CREATE TABLE IF NOT EXISTS `password_resets` (
 ) ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table: foods (Updated with image_name after description)
+-- Table: foods
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `foods` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `food_code` VARCHAR(10) NOT NULL UNIQUE,
   `title` VARCHAR(100) NOT NULL,
   `description` TEXT,
-  `image_name` VARCHAR(255) NULL, -- Positioned per migration
+  `image_name` VARCHAR(255) NULL,
   `price` DECIMAL(10,2) NOT NULL,
   `category_id` INT NOT NULL,
   `active` ENUM('Yes', 'No') DEFAULT 'Yes',
@@ -126,7 +126,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `order_number` VARCHAR(20) NOT NULL UNIQUE,
   `customer_id` INT NOT NULL,
-  `status` ENUM('Pending', 'Confirmed', 'Preparing', 'Out for Delivery', 'Delivered', 'Cancelled') DEFAULT 'Pending',
+  `status` VARCHAR(50) DEFAULT 'Ordered',
   `total_amount` DECIMAL(10,2) NOT NULL,
   `delivery_address` VARCHAR(255) NOT NULL,
   `delivery_phone` VARCHAR(20) NOT NULL,
@@ -159,3 +159,25 @@ CREATE TABLE IF NOT EXISTS `order_items` (
   CONSTRAINT `fk_item_order` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_item_food` FOREIGN KEY (`food_id`) REFERENCES `foods` (`id`)
 ) ENGINE = InnoDB;
+
+-- Remove the old constraint and column
+ALTER TABLE `audit_log` DROP FOREIGN KEY `fk_audit_user`;
+ALTER TABLE `audit_log` DROP COLUMN `changed_by`;
+
+-- Add specific nullable foreign key columns
+ALTER TABLE `audit_log` 
+ADD COLUMN `user_id` INT NULL,
+ADD COLUMN `customer_id` INT NULL,
+ADD CONSTRAINT `fk_audit_internal_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE SET NULL,
+ADD CONSTRAINT `fk_audit_customer` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE SET NULL;\
+
+-- Remove the polymorphic columns
+ALTER TABLE `password_resets` DROP COLUMN `account_type`;
+ALTER TABLE `password_resets` DROP COLUMN `account_id`;
+
+-- Add explicit, constrained foreign key columns
+ALTER TABLE `password_resets` 
+ADD COLUMN `user_id` INT NULL,
+ADD COLUMN `customer_id` INT NULL,
+ADD CONSTRAINT `fk_reset_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE,
+ADD CONSTRAINT `fk_reset_customer` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE;

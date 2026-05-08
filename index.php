@@ -1,7 +1,12 @@
 <?php 
-include'includes/session.php'; 
-include'config/database.php'; 
+include 'includes/session.php'; 
+include 'config/database.php'; // This defines the class
+
+// ADD THESE LINES TO INITIALIZE THE CONNECTION
+$database = new Database();
+$db = $database->getConnection(); 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,9 +30,17 @@ include'config/database.php';
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="Controller/home_menu_view_controller.php">Menu</a></li>
-                <li class="nav-item"><a class="nav-link" href="controller/login_controller.php">Login</a></li>
-                <li class="nav-item ms-lg-3"><a class="btn btn-primary rounded-pill px-4" href="controller/menu_view.php">Order Now</a></li>
+                <!-- <li class="nav-item"><a class="nav-link" href="../controller/menu_view_controller.php">Menu</a></li> -->
+                <?php if (isset($_SESSION['user_id']) || isset($_SESSION['customer_id'])): ?>
+                    <li class="nav-item"><a class="nav-link text-warning" href="controller/customer_dashboard_controller.php">My Orders</a></li>
+                    <li class="nav-item"><a class="nav-link" href="controller/logout_controller.php">Logout</a></li>
+                <?php else: ?>
+                    <li class="nav-item"><a class="nav-link" href="controller/login_controller.php">Login</a></li>
+                <?php endif; ?>
+
+                <li class="nav-item ms-lg-3">
+                    <a class="btn btn-primary rounded-pill px-4" href="controller/menu_view_controller.php">Order Now</a>
+                </li>
             </ul>
         </div>
     </nav>
@@ -40,7 +53,7 @@ include'config/database.php';
                     <p class="lead mb-5">Experience the ultimate flavor with WOWFOOD. From local favorites to gourmet delights, we bring the restaurant to your door.</p>
                     <div class="d-flex gap-3">
                         <a href="#menu" class="btn btn-warning btn-lg rounded-pill px-5 fw-bold">Explore Menu</a>
-                        <a href="#" class="btn btn-outline-light btn-lg rounded-pill px-5"><i class="fas fa-play me-2"></i>Watch Video</a>
+                        <a href="assets/video/marketing.mp4" class="btn btn-outline-light btn-lg rounded-pill px-5"><i class="fas fa-play me-2"></i>Watch Video</a>
                     </div>
                 </div>
             </div>
@@ -53,17 +66,17 @@ include'config/database.php';
                 <div class="col-md-4 mb-4">
                     <i class="fas fa-shipping-fast fa-3x text-danger mb-3"></i>
                     <h4>30 Minute Delivery</h4>
-                    <p class="text-muted">Fastest delivery in the city or your money back.</p>
+                    <p class="text-secondary">Fastest delivery in the city or your money back.</p>
                 </div>
                 <div class="col-md-4 mb-4">
                     <i class="fas fa-utensils fa-3x text-danger mb-3"></i>
                     <h4>Quality Ingredients</h4>
-                    <p class="text-muted">We only partner with top-rated local restaurants.</p>
+                    <p class="text-secondary">We only partner with top-rated local restaurants.</p>
                 </div>
                 <div class="col-md-4 mb-4">
                     <i class="fas fa-headset fa-3x text-danger mb-3"></i>
                     <h4>24/7 Support</h4>
-                    <p class="text-muted">Our team is always here to help with your cravings.</p>
+                    <p class="text-secondary">Our team is always here to help with your cravings.</p>
                 </div>
             </div>
         </div>
@@ -75,64 +88,64 @@ include'config/database.php';
                 <h2 class="display-5 fw-bold">Popular Categories</h2>
                 <div class="mx-auto bg-danger" style="height: 3px; width: 60px;"></div>
             </div>
-            <div class="row g-4">
-                <div class="row g-4">
-                    <?php if (!empty($categories)): ?>
-                        <?php foreach ($categories as $cat): ?>
-                            <div class="col-md-3">
-                                <div class="card category-card border-0 shadow-sm overflow-hidden">
-                                    <?php 
-                                        // Simplified View Logic: Determine image source
-                                        $image_path = !empty($cat['image_name']) 
-                                            ? "images/category/" . $cat['image_name'] 
-                                            : "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=500";
-                                    ?>
-                                    
-                                    <img src="<?php echo $image_path; ?>" 
-                                        class="card-img-top" 
-                                        alt="<?php echo htmlspecialchars($cat['title']); ?>">
-                                    
-                                    <div class="card-body text-center">
-                                        <h5 class="card-title fw-bold">
-                                            <?php echo htmlspecialchars($cat['title']); ?>
-                                        </h5>
-                                        <a href="menu.php?cat=<?php echo $cat['id']; ?>" 
-                                        class="stretched-link text-danger text-decoration-none">
-                                            View All
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <p class="text-center">No categories found.</p>
-                    <?php endif; ?>
+           <div class="row g-4">
+<?php 
+$query = "SELECT 
+            category_id, 
+            category_name, 
+            MIN(image_name) as image_name 
+          FROM vw_food_details 
+          WHERE active = 'Yes' 
+          GROUP BY category_id, category_name 
+          LIMIT 4";
+          
+try {
+    $stmt = $db->prepare($query);
+    $stmt->execute();
+    $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    if (!empty($categories)): 
+        foreach ($categories as $cat): 
+            $imageFileName = (!empty($cat['image_name'])) ? $cat['image_name'] : 'default-catergory.jpg';
+?>
+            <div class="col-md-3">
+                <div class="category-card text-center p-4 shadow-sm rounded-4 bg-white border">
+                    <img src="assets/images/category/<?php echo htmlspecialchars($imageFileName); ?>" 
+                         class="img-fluid mb-3 rounded-3" 
+                         style="height: 150px; width: 100%; object-fit: cover;" 
+                         alt="<?php echo htmlspecialchars($cat['category_name']); ?>">
+                    <h5 class="fw-bold"><?php echo htmlspecialchars($cat['category_name']); ?></h5>
                 </div>
             </div>
+        <?php endforeach; 
+    else: ?>
+        <div class="col-12 text-center py-5 text-secondary">
+            <p>No popular categories available right now.</p>
         </div>
-    </section>
+<?php 
+    endif; 
+} catch (PDOException $e) {
+    echo "<p class='text-danger'>Error loading categories: " . $e->getMessage() . "</p>";
+}
+?>
+</div>
+                       <br>
+                       <br>
 
-    <section class="py-5 bg-dark text-white text-center" style="background: linear-gradient(rgba(230, 57, 70, 0.9), rgba(230, 57, 70, 0.9)), url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1000'); background-size: cover; background-attachment: fixed;">
-        <div class="container py-5">
-            <h2 class="display-4 fw-bold mb-4">Become a WOWFOOD Partner</h2>
-            <p class="lead mb-4">Join our network of restaurants and reach thousands of hungry customers.</p>
-            <a href="register.php" class="btn btn-light btn-lg rounded-pill px-5 fw-bold">Join Us Today</a>
-        </div>
-    </section>
 
     <footer class="bg-dark text-white pt-5 pb-3">
         <div class="container text-center text-md-start">
             <div class="row">
                 <div class="col-md-4 mb-4">
                     <h3 class="fw-bold"><span class="text-danger">WOW</span>FOOD</h3>
-                    <p class="text-muted">Redefining how you eat. Reliable, fast, and always delicious.</p>
+                    <p class="text-secondary">Redefining how you eat. Reliable, fast, and always delicious.</p>
                 </div>
                 <div class="col-md-4 mb-4">
                     <h5>Quick Links</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-muted text-decoration-none">About Us</a></li>
-                        <li><a href="#" class="text-muted text-decoration-none">Terms & Conditions</a></li>
-                        <li><a href="#" class="text-muted text-decoration-none">Privacy Policy</a></li>
+                        <li><a href="#" class="text-secondary text-decoration-none">About Us</a></li>
+                        <li><a href="#" class="text-secondary text-decoration-none">Terms & Conditions</a></li>
+                        <li><a href="#" class="text-secondary text-decoration-none">Privacy Policy</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4 mb-4 text-center">
@@ -145,7 +158,7 @@ include'config/database.php';
                 </div>
             </div>
             <hr class="bg-secondary">
-            <p class="text-center text-muted mb-0">&copy; 2026 WOWFOOD Inc. All Rights Reserved.</p>
+            <p class="text-center text-secondary mb-0">&copy; 2026 WOWFOOD Inc. All Rights Reserved.</p>
         </div>
     </footer>
 

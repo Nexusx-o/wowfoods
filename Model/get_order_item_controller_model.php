@@ -1,7 +1,5 @@
 <?php
-/**
- * OrderModel - Handles order data
- */
+
 class OrderModel {
     private $db;
 
@@ -9,12 +7,12 @@ class OrderModel {
         $this->db = $dbConnection;
     }
 
-    /**
-     * Stored Procedure එක භාවිතා කර Order Items ලබා ගැනීම
-     */
+    
+     // Retrieving Order Items using a Stored Procedure
+     
     public function getOrderItems($order_id) {
         try {
-            // Stored Procedure එක CALL කිරීම
+            // CALL the Stored Procedure
             $sql = "CALL GetOrderItemsDetails(:order_id)";
             
             $stmt = $this->db->prepare($sql);
@@ -22,7 +20,6 @@ class OrderModel {
             
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            // Cursor එක close කිරීම අනිවාර්ය වේ (පසුකාලීන Queries වල දෝෂ මඟහැරීමට)
             $stmt->closeCursor();
 
             return $result;

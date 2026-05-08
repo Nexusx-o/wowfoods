@@ -1,7 +1,5 @@
 <?php
-/**
- * OrderModel - Handles order placement using Stored Procedures
- */
+
 class OrderModel {
     private $db;
 
@@ -13,8 +11,7 @@ class OrderModel {
         try {
             $this->db->beginTransaction();
 
-            // 1. ප්‍රධාන ඇණවුම ඇතුළත් කර ID එක ලබා ගැනීම
-            // OUT parameter එකක් ඇති නිසා මෙහිදී SQL එක මදක් වෙනස් වේ
+            //  Enter the main order and get the ID
             $sql_order = "CALL CreateNewOrder(:order_number, :customer_id, :total, :payment, :address, :phone, @order_id)";
             $stmt_order = $this->db->prepare($sql_order);
             $stmt_order->execute([
@@ -27,10 +24,10 @@ class OrderModel {
             ]);
             $stmt_order->closeCursor();
 
-            // SQL හරහා @order_id එක ලබා ගැනීම
+            // Getting the @order_id via SQL
             $order_id = $this->db->query("SELECT @order_id AS id")->fetch(PDO::FETCH_ASSOC)['id'];
 
-            // 2. කරත්තයේ ඇති අයිතම ඇතුළත් කිරීම
+            // Adding items to cart
             $stmt_items = $this->db->prepare("CALL AddOrderItem(:order_id, :food_id, :qty, :unit_price)");
 
             foreach ($cartItems as $food_id => $item) {
@@ -40,7 +37,7 @@ class OrderModel {
                     ':qty'        => $item['qty'],
                     ':unit_price' => $item['price']
                 ]);
-                $stmt_items->closeCursor(); // වැදගත්: Loop එක තුළ Cursor එක Close කරන්න
+                $stmt_items->closeCursor();
             }
 
             $this->db->commit();

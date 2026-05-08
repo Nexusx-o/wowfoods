@@ -1,6 +1,4 @@
 <?php
-// config/database.php
-
 class Database {
     private $host = 'localhost';
     private $db   = 'food_order';
