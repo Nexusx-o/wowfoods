@@ -106,8 +106,6 @@ try {
 
     if (!empty($categories)): 
         foreach ($categories as $cat): 
-            // FIX: Check if image_name is empty OR null
-            // Also fixed the typo 'catergory' to 'category'
             $imageFileName = (!empty($cat['image_name'])) ? $cat['image_name'] : 'default-catergory.jpg';
 ?>
             <div class="col-md-3">
