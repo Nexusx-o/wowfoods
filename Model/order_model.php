@@ -19,7 +19,7 @@ class OrderModel {
     }
 
     public function update($id, $status, $pay_status, $admin_id) {
-        $stmt = $this->conn->prepare("CALL UpdateOrder(:id, :status, :pay, :admin)");
+        $stmt = $this->conn->prepare("CALL UpdateOrderStatus(:id, :status, :pay, :admin)");
         return $stmt->execute([
             ':id'     => $id,
             ':status' => $status,

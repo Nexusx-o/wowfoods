@@ -1,6 +1,5 @@
 <?php include '../includes/header.php'; ?>
 
-
 <div class="container py-5">
 
     <?php if (isset($_GET['msg']) && $_GET['msg'] == 'pw_reset'): ?>
@@ -14,13 +13,14 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
             <h3 class="fw-bold mb-0">System <span class="text-danger">Users</span></h3>
-            <a href="../Controller/admin_dashboard_controller.php" class="btn btn-sm btn-outline-secondary rounded-pill px-3 mt-2">
-                <i class="fas fa-arrow-left me-1"></i> Dashboard
+            <p class="text-muted small">View and manage all users in the system.</p>
+        </div>
+        <div>
+            <a href="../controller/admin_dashboard_controller.php?action=manage" class="btn btn-outline-secondary rounded-pill px-4">Back</a>
+            <a href="User_Controller.php?action=add" class="btn btn-danger rounded-pill px-4 shadow-sm">
+                <i class="fas fa-user-plus me-1"></i> Add User
             </a>
         </div>
-        <a href="User_Controller.php?action=add" class="btn btn-danger rounded-pill px-4 shadow-sm">
-            <i class="fas fa-user-plus me-1"></i> Add User
-        </a>
     </div>
 
     <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
@@ -43,12 +43,14 @@
                         </td>
                         <td>
                             <span class="badge bg-light text-dark border fw-normal">
-                                <?php echo htmlspecialchars($u['username'] ?? ''); ?>
+                                <?php echo htmlspecialchars($u['username'] ?? 'N/A'); ?>
                             </span>
                         </td>
                         <td><?php echo htmlspecialchars($u['email'] ?? 'N/A'); ?></td>
                         <td>
-                            <span class="small fw-bold text-uppercase text-muted"><?php echo $u['role']; ?></span>
+                            <span class="badge bg-info text-dark text-uppercase" style="font-size: 0.7rem;">
+                                <?php echo htmlspecialchars($u['role'] ?? 'Staff'); ?>
+                            </span>
                         </td>
                         <td class="text-end pe-4">
                             <a href="User_Controller.php?action=update&id=<?php echo $u['id']; ?>" 
@@ -56,11 +58,16 @@
                             
                             <a href="User_Controller.php?action=reset_password&id=<?php echo $u['id']; ?>" 
                                class="btn btn-sm btn-warning rounded-pill px-3" 
-                               onclick="return confirm('Reset this user\'s password to default (WowFood123)?')">
+                               onclick="return confirm('Reset this user\'s password to default?')">
                                <i class="fas fa-key me-1"></i> Reset
                             </a>
 
-                            <?php if($u['id'] != $_SESSION['user_id']): ?>
+                            <?php 
+                                // Defensive check for session ID to prevent the "Undefined Array Key" error
+                                $current_logged_in_id = $_SESSION['user_id'] ?? $_SESSION['id'] ?? 0;
+                                
+                                if($u['id'] != $current_logged_in_id): 
+                            ?>
                                 <a href="User_Controller.php?action=delete&id=<?php echo $u['id']; ?>" 
                                    class="btn btn-sm btn-danger rounded-pill px-3" 
                                    onclick="return confirm('Delete user permanently?')">Delete</a>
