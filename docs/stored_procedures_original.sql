@@ -116,23 +116,25 @@ END //
 DELIMITER ;
 -- Stored Procedure to Reset Password
 
-CREATE PROCEDURE sp_ResetPassword(
+DELIMITER ;;
+CREATE PROCEDURE `sp_ResetPassword`(
     IN p_token VARCHAR(255),
-    IN p_account_type VARCHAR(20),
-    IN p_account_id INT,
+    IN p_user_id INT,
+    IN p_customer_id INT,
     IN p_new_password VARCHAR(255)
 )
 BEGIN
-    -- 1. Update the correct account table
-    IF p_account_type = 'user' THEN
-        UPDATE `user` SET password = p_new_password WHERE id = p_account_id;
-    ELSE
-        UPDATE customers SET password = p_new_password WHERE id = p_account_id;
+    -- Update the correct master table based on which ID is provided
+    IF p_user_id IS NOT NULL THEN
+        UPDATE `user` SET password = p_new_password WHERE id = p_user_id;
+    ELSEIF p_customer_id IS NOT NULL THEN
+        UPDATE customers SET password = p_new_password WHERE id = p_customer_id;
     END IF;
-
-    -- 2. Invalidate the token so it can't be used again
+    
+    -- Mark the token as used
     UPDATE password_resets SET used = 1 WHERE token = p_token;
-END
+END ;;
+DELIMITER ;
 
 -- Stored Procedure to Authenticate User or Customer
 
