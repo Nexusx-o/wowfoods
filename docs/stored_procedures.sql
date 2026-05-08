@@ -320,3 +320,75 @@ BEGIN
 END //
 
 DELIMITER ;
+
+-- Stored Procedure to find account by email for both users and customers (used in password reset flow)
+
+DELIMITER //
+
+CREATE PROCEDURE sp_FindAccountByEmail(IN p_email VARCHAR(255))
+BEGIN
+    -- Combine results from both tables
+    SELECT id, 'user' AS account_type 
+    FROM `user` 
+    WHERE email = p_email
+    
+    UNION ALL
+    
+    SELECT id, 'customer' AS account_type 
+    FROM `customers` 
+    WHERE email = p_email
+    
+    LIMIT 1; 
+END //
+
+DELIMITER ;
+
+-- Stored Procedure to create a password reset token for both users and customers
+
+DELIMITER //
+
+CREATE PROCEDURE sp_CreatePasswordReset(
+    IN p_type VARCHAR(20),
+    IN p_id INT,
+    IN p_token VARCHAR(255)
+)
+BEGIN
+    INSERT INTO password_resets (account_type, account_id, token, expires_at)
+    VALUES (p_type, p_id, p_token, DATE_ADD(NOW(), INTERVAL 1 HOUR));
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+-- Stored Procedure to verify the reset token and retrieve associated account info
+
+CREATE PROCEDURE sp_VerifyResetToken(IN p_token VARCHAR(255))
+BEGIN
+    SELECT account_type, account_id, expires_at, used 
+    FROM password_resets 
+    WHERE token = p_token 
+    LIMIT 1;
+END //
+
+-- Stored Procedure to perform the password reset after token verification
+
+CREATE PROCEDURE sp_PerformPasswordReset(
+    IN p_token VARCHAR(255),
+    IN p_type VARCHAR(20),
+    IN p_id INT,
+    IN p_hashed_password VARCHAR(255)
+)
+BEGIN
+    -- Update the correct table based on account_type
+    IF p_type = 'user' THEN
+        UPDATE `user` SET password = p_hashed_password WHERE id = p_id;
+    ELSE
+        UPDATE customers SET password = p_hashed_password WHERE id = p_id;
+    END IF;
+
+    -- Mark the token as used so it cannot be used again
+    UPDATE password_resets SET used = 1 WHERE token = p_token;
+END //
+
+DELIMITER ;

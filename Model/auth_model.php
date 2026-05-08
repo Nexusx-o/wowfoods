@@ -8,23 +8,6 @@ class AuthModel {
         $this->pdo = $pdo;
     }
 
-    public function verifyResetToken($token) {
-        $stmt = $this->pdo->prepare("SELECT * FROM password_resets WHERE token = ? LIMIT 1");
-        $stmt->execute([$token]);
-        return $stmt->fetch();
-    }
-
-    public function performPasswordReset($token, $type, $id, $hashedPassword) {
-        $sql = "CALL sp_ResetPassword(:token, :type, :id, :pass)";
-        $stmt = $this->pdo->prepare($sql);
-        return $stmt->execute([
-            ':token' => $token,
-            ':type'  => $type,
-            ':id'    => $id,
-            ':pass'  => $hashedPassword
-        ]);
-    }
-
     /**
      * Calls the SP to find a user in either table by username/email
      */
@@ -32,5 +15,24 @@ class AuthModel {
         $stmt = $this->pdo->prepare("CALL sp_AuthenticateUser(?)");
         $stmt->execute([$identifier]);
         return $stmt->fetch();
+    }
+
+    public function verifyResetToken($token) {
+        $stmt = $this->pdo->prepare("CALL sp_VerifyResetToken(?)");
+        $stmt->execute([$token]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt->closeCursor();
+        return $result;
+    }
+
+    public function performPasswordReset($token, $type, $id, $hashedPassword) {
+        try {
+            $stmt = $this->pdo->prepare("CALL sp_PerformPasswordReset(?, ?, ?, ?)");
+            $result = $stmt->execute([$token, $type, $id, $hashedPassword]);
+            $stmt->closeCursor();
+            return $result;
+        } catch (PDOException $e) {
+            return false;
+        }
     }
 }

@@ -196,3 +196,9 @@ input::-ms-clear {
 .password-field {
     padding-right: 40px !important;
 }                                                                   
+
+.swal2-styled.swal2-confirm {
+    background-color: #E63946 !important; /* WowFood Red */
+    border-radius: 50px !important;
+    padding: 10px 30px !important;
+}

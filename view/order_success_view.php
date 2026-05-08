@@ -15,7 +15,7 @@
             confirmButtonText: 'Go to Dashboard'
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = '../Controller/customer_dashboad_controller.php';
+                window.location.href = '../Controller/customer_dashboard_controller.php';
             }
         });
     </script>

@@ -22,7 +22,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $_SESSION['full_name'] = $user['first_name'] . ' ' . $user['last_name'];
 
     // 2. Determine if the user is an Admin or a Customer
-    // We check if the 'role' key exists and if it is set to 'admin'
     if (isset($user['role']) && $user['role'] === 'admin') {
         
         // --- ADMIN LOGIC ---
@@ -34,7 +33,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         
         // --- CUSTOMER LOGIC ---
-        // Customers don't have a role, so we treat them as the default
         $_SESSION['role'] = 'customer'; 
         $_SESSION['customer_id'] = $user['id']; // Store customer's primary key
         

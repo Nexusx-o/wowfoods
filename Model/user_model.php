@@ -33,11 +33,25 @@ class UserModel {
         return $stmt->execute([':id' => $id]);
     }
 
-    public function resetPassword($id, $newPasswordHash) {
-    $stmt = $this->conn->prepare("CALL ResetUserPassword(:id, :pass)");
-    return $stmt->execute([
-        ':id' => $id,
-        ':pass' => $newPasswordHash
-    ]);
+
+    public function findAccountByEmail($email) {
+        // This single call now checks both tables thanks to the UNION
+        $stmt = $this->conn->prepare("CALL sp_FindAccountByEmail(?)");
+        $stmt->execute([$email]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt->closeCursor(); 
+
+        return $result; // Returns ['id' => X, 'account_type' => 'user' OR 'customer'] or false
+    }
+
+    public function createPasswordReset($type, $id, $token) {
+    // Safety check: if type is somehow still null, don't even try the SQL
+    if (empty($type)) {
+        error_log("Password reset failed: Account type is missing for ID " . $id);
+        return false;
+    }
+
+    $stmt = $this->conn->prepare("CALL sp_CreatePasswordReset(?, ?, ?)");
+    return $stmt->execute([$type, $id, $token]);
 }
 }
