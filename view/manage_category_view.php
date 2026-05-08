@@ -2,8 +2,15 @@
 
 <div class="container py-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3>Manage Categories</h3>
+        <div>
+            <h3 class="fw-bold mb-0">Manage <span class="text-danger">Category</span></h3>
+            <p class="text-muted small">View and manage all categories available on your shop.</p>
+        </div>
+        <div>
+         <a href="../controller/admin_dashboard_controller.php?action=manage" class="btn btn-outline-secondary rounded-pill px-4">Back</a>
+
         <a href="../controller/Category_Controller.php?action=add" class="btn btn-danger rounded-pill px-4">Add New</a>
+</div>
     </div>
 
     <div class="card border-0 shadow-sm rounded-4">
