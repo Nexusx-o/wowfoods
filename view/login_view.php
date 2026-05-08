@@ -48,7 +48,7 @@
                     <p class="small mb-1">Don't have an account? 
                         <a href="../controller/signup_controller.php" class="brand-red fw-bold text-decoration-none">Sign Up</a>
                     </p>
-                    <a href="index.php" class="text-muted text-decoration-none small">Back to Home</a>
+                    <a href="../index.php" class="text-muted text-decoration-none small">Back to Home</a>
                 </div>
 
             </div>

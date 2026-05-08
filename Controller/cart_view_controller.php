@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['food_id'])) {
         }
     }
     // "Not Found" නොවීමට නිවැරදි Path එක ලබා දීම
-    header("Location: CartController.php");
+    header("Location: cart_view_controller.php"); 
     exit();
 }
 
@@ -62,8 +62,10 @@ if (isset($_POST['update_qty']) && isset($_POST['qty'])) {
     exit();
 }
 
-// D. CALCULATE TOTALS
-$grand_total = $cartModel->calculateGrandTotal($_SESSION['cart'] ?? []);
+$grand_total = 0;
+if (!empty($_SESSION['cart'])) {
+    $grand_total = $cartModel->calculateGrandTotal($_SESSION['cart']);
+}
 
 // 3. පෙනුම (View) ලෝඩ් කිරීම
 include __DIR__ . '/../view/cart_view.php';
