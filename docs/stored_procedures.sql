@@ -392,3 +392,22 @@ BEGIN
 END //
 
 DELIMITER ;
+
+USE `food_order`;
+
+DROP PROCEDURE IF EXISTS `AddUser`;
+
+DELIMITER ;;
+CREATE PROCEDURE `AddUser`(
+    IN p_first VARCHAR(50),
+    IN p_last VARCHAR(50),
+    IN p_user VARCHAR(100),
+    IN p_pass VARCHAR(255),
+    IN p_email VARCHAR(150),
+    IN p_role ENUM('Admin', 'Manager', 'Staff')
+)
+BEGIN
+    INSERT INTO `user` (first_name, last_name, username, password, email, role)
+    VALUES (p_first, p_last, p_user, p_pass, p_email, p_role);
+END ;;
+DELIMITER ;
