@@ -30,17 +30,9 @@ $db = $database->getConnection();
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
-                <!-- <li class="nav-item"><a class="nav-link" href="../controller/menu_view_controller.php">Menu</a></li> -->
-                <?php if (isset($_SESSION['user_id']) || isset($_SESSION['customer_id'])): ?>
-                    <li class="nav-item"><a class="nav-link text-warning" href="controller/customer_dashboard_controller.php">My Orders</a></li>
-                    <li class="nav-item"><a class="nav-link" href="controller/logout_controller.php">Logout</a></li>
-                <?php else: ?>
-                    <li class="nav-item"><a class="nav-link" href="controller/login_controller.php">Login</a></li>
-                <?php endif; ?>
-
-                <li class="nav-item ms-lg-3">
-                    <a class="btn btn-primary rounded-pill px-4" href="controller/menu_view_controller.php">Order Now</a>
-                </li>
+                <li class="nav-item"><a class="nav-link" href="controller/menu_view.php">Menu</a></li>
+                <li class="nav-item"><a class="nav-link" href="controller/login_controller.php">Login</a></li>
+                <li class="nav-item ms-lg-3"><a class="btn btn-primary rounded-pill px-4" href="controller/menu_view.php">Order Now</a></li>
             </ul>
         </div>
     </nav>
@@ -143,9 +135,9 @@ try {
                 <div class="col-md-4 mb-4">
                     <h5>Quick Links</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-secondary text-decoration-none">About Us</a></li>
-                        <li><a href="#" class="text-secondary text-decoration-none">Terms & Conditions</a></li>
-                        <li><a href="#" class="text-secondary text-decoration-none">Privacy Policy</a></li>
+                        <li><a href="#" class="text-muted text-decoration-none">About Us</a></li>
+                        <li><a href="#" class="text-muted text-decoration-none">Terms & Conditions</a></li>
+                        <li><a href="#" class="text-muted text-decoration-none">Privacy Policy</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4 mb-4 text-center">

@@ -3,11 +3,8 @@ class Database {
     private $host = 'localhost';
     private $db   = 'food_order';
     private $user = 'root';
-    private $pass = '';
-    private $port = 3308;
-    private $charset = 'utf8mb4';
-
-    private $pdo = null;
+    private $pass = 'myposadminauthentication';
+    private $pdo;
 
     public function getConnection() {
      
