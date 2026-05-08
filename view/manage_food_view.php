@@ -43,8 +43,7 @@ include '../includes/header.php';
                             </td>
                             <td>
                                 <span class="badge bg-light text-dark border rounded-pill px-3">
-                                    <?php echo htmlspecialchars($food['category_title']); ?>
-                                </span>
+                                <td><?php echo htmlspecialchars($food['category_name'] ?? 'Uncategorized'); ?></td></span>
                             </td>
                             <td>
                                 <span class="text-danger fw-bold">$<?php echo number_format($food['price'], 2); ?></span>
