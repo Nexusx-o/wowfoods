@@ -15,7 +15,7 @@
                 <a href="../view/add_category_view.php" class="btn btn-outline-danger rounded-pill px-4 shadow-sm me-2">
                     <i class="fas fa-folder-plus me-2"></i>Add Category
                 </a>
-                <a href="../view/add_food_view.php" class="btn btn-danger rounded-pill px-4 shadow-sm me-2">
+                <a href="../controller/food_controller.php?action=add" class="btn btn-danger rounded-pill px-4 shadow-sm me-2">
                     <i class="fas fa-hamburger me-2"></i>Add Food
                 </a>
                 <a href="../view/add_user_view.php" class="btn btn-outline-dark rounded-pill px-4 shadow-sm">

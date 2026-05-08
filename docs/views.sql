@@ -43,3 +43,10 @@ BEGIN
 END ;;
 
 DELIMITER ;
+
+CREATE OR REPLACE VIEW `vw_food_catalog` AS
+SELECT 
+    f.*, 
+    c.title AS category_name  -- <--- This is the key your PHP must use
+FROM `foods` f
+LEFT JOIN `category` c ON f.category_id = c.id;
