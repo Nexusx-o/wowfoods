@@ -53,7 +53,7 @@ $db = $database->getConnection();
                     <p class="lead mb-5">Experience the ultimate flavor with WOWFOOD. From local favorites to gourmet delights, we bring the restaurant to your door.</p>
                     <div class="d-flex gap-3">
                         <a href="#menu" class="btn btn-warning btn-lg rounded-pill px-5 fw-bold">Explore Menu</a>
-                        <a href="#" class="btn btn-outline-light btn-lg rounded-pill px-5"><i class="fas fa-play me-2"></i>Watch Video</a>
+                        <a href="assets/video/marketing.mp4" class="btn btn-outline-light btn-lg rounded-pill px-5"><i class="fas fa-play me-2"></i>Watch Video</a>
                     </div>
                 </div>
             </div>
