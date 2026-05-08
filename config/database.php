@@ -4,7 +4,7 @@ class Database {
     private $host = 'localhost';
     private $db   = 'food_order';
     private $user = 'root';
-    private $pass = 'myposadminauthentication';
+    private $pass = 'database';
     private $pdo;
 
     public function getConnection() {

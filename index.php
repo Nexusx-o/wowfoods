@@ -27,7 +27,9 @@ include'config/database.php';
                 <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="controller/menu_view.php">Menu</a></li>
                 <li class="nav-item"><a class="nav-link" href="controller/login_controller.php">Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="controller/blog_index.php">Blog</a></li>
                 <li class="nav-item ms-lg-3"><a class="btn btn-primary rounded-pill px-4" href="controller/menu_view.php">Order Now</a></li>
+                
             </ul>
         </div>
     </nav>
@@ -131,8 +133,8 @@ include'config/database.php';
                     <h5>Quick Links</h5>
                     <ul class="list-unstyled">
                         <li><a href="#" class="text-muted text-decoration-none">About Us</a></li>
-                        <li><a href="#" class="text-muted text-decoration-none">Terms & Conditions</a></li>
-                        <li><a href="#" class="text-muted text-decoration-none">Privacy Policy</a></li>
+                        <li><a href="terms.php" class="text-muted text-decoration-none">Terms & Conditions</a></li>
+                        <li><a href="privacy.php" class="text-muted text-decoration-none">Privacy Policy</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4 mb-4 text-center">

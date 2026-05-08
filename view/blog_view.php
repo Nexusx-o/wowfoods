@@ -1,13 +1,13 @@
 <div class="container">
-    <h2>Latest Recipes</h2>
-    <?php while($row = mysqli_fetch_assoc($posts)): ?>
-        <div class="recipe-card">
-            <h3><?php echo $row['title']; ?></h3>
-            <p>Category: <strong><?php echo $row['category']; ?></strong></p>
-            <p><?php echo substr($row['excerpt'], 0, 100); ?>...</p>
-            <a href="post.php?id=<?php echo $row['id']; ?>">Read More</a>
-        </div>
-    <?php endwhile; ?>
+    <h1>Welcome to WowFoods</h1>
+    <div class="grid">
+        <?php while($row = mysqli_fetch_assoc($posts)): ?>
+            <div class="card">
+                <img src="images/<?php echo $row['image_url']; ?>">
+                <h2><?php echo $row['title']; ?></h2>
+                <p><?php echo $row['excerpt']; ?></p>
+                <a href="post.php?id=<?php echo $row['id']; ?>">View Recipe</a>
+            </div>
+        <?php endwhile; ?>
+    </div>
 </div>
-</body>
-</html>

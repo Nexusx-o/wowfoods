@@ -6,11 +6,9 @@ class Post {
         $this->conn = $db;
     }
 
-    
-    public function getAll() {
+    public function getAllPosts() {
         $query = "SELECT * FROM blog_posts ORDER BY created_at DESC";
-        $result = mysqli_query($this->conn, $query);
-        return $result;
+        return mysqli_query($this->conn, $query);
     }
 }
 ?>
