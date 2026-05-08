@@ -1,28 +1,17 @@
-<?php
-/**
- * WOWFOOD - Home Menu View Controller
- */
-
-// 1. පද්ධතිය ආරම්භ කිරීම සහ අවශ්‍ය Files සම්බන්ධ කිරීම
-// init.php හරහා session start වේ.
-//require_once __DIR__ . '/../config/init.php'; 
-
-// 2. Database Class එක සහ Model එක කෙලින්ම සම්බන්ධ කිරීම (Error එක වැළැක්වීමට)
-//require_once __DIR__ . '/../config/database.php'; 
-//require_once __DIR__ . '/../Model/home_menu_view_model.php'; 
+<?php 
 require_once '../config/init.php';
 require_once '../model/home_menu_view_model.php';
-// 3. Database Object එකක් සාදා Connection එක ලබා ගැනීම
-// දැන් Class 'Database' not found error එක එන්නේ නැත.
+
+// Creating a Database Object and Obtaining a Connection
 $database = new Database(); 
 $db = $database->getConnection();
 
-// 4. Model එක සෑදීම
+// Making the model
 $menuModel = new HomeMenuModel($db);
 
-// --- APPLICATION LOGIC ---
 
-// A. ADD TO CART LOGIC
+// LOGIC
+// ADD TO CART LOGIC
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['food_id'])) {
     $food_id = (int)$_POST['food_id'];
     $food = $menuModel->getFoodById($food_id);
@@ -45,11 +34,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['food_id'])) {
     exit();
 }
 
-// B. DATA FETCHING (දත්ත ලබා ගැනීම)
+// DATA FETCHING
 $category_id = isset($_GET['cat_id']) ? (int)$_GET['cat_id'] : 0;
 $categories = $menuModel->getAllCategories();
 $foods = $menuModel->getFoods($category_id);
 
-// 5. VIEW එක LOAD කිරීම
+// LOADING THE VIEW
 include __DIR__ . '/../view/home_menu_view.php'; 
 ?>
