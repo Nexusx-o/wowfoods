@@ -196,7 +196,7 @@ CREATE TABLE `order_items` (
   CONSTRAINT `fk_item_order` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
   CONSTRAINT `chk_item_price` CHECK ((`unit_price` > 0)),
   CONSTRAINT `chk_item_qty` CHECK ((`quantity` > 0))
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -205,7 +205,7 @@ CREATE TABLE `order_items` (
 
 LOCK TABLES `order_items` WRITE;
 /*!40000 ALTER TABLE `order_items` DISABLE KEYS */;
-INSERT INTO `order_items` (`id`, `order_id`, `food_id`, `quantity`, `unit_price`) VALUES (1,1,1,1,12.99),(2,1,2,1,15.50),(3,2,4,1,11.50),(4,3,5,1,8.50),(5,3,1,1,12.99),(6,4,2,3,15.50);
+INSERT INTO `order_items` (`id`, `order_id`, `food_id`, `quantity`, `unit_price`) VALUES (1,1,1,1,12.99),(2,1,2,1,15.50),(3,2,4,1,11.50),(4,3,5,1,8.50),(5,3,1,1,12.99),(6,4,2,3,15.50),(7,5,1,1,12.99);
 /*!40000 ALTER TABLE `order_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -240,7 +240,7 @@ CREATE TABLE `orders` (
   CONSTRAINT `fk_order_cust` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`),
   CONSTRAINT `fk_order_updated_by` FOREIGN KEY (`updated_by`) REFERENCES `user` (`id`) ON DELETE SET NULL,
   CONSTRAINT `chk_order_total` CHECK ((`total_amount` >= 0))
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -249,7 +249,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (1,'ORD-2023-001',1,'Delivered',25.48,'123 Maple St, New York','555-0101','Card','Pending','2026-05-08 07:27:59','2026-05-08 16:29:49',NULL),(2,'ORD-2023-002',2,'Ordered',11.50,'456 Oak Avenue, Chicago','555-0102','Cash','Pending','2026-05-08 07:27:59','2026-05-08 12:21:45',NULL),(3,'ORD-2023-003',3,'Processing',21.49,'789 Pine Lane, Los Angeles','555-0103','Online','Paid','2026-05-08 07:27:59','2026-05-08 07:27:59',NULL),(4,'ORD-2026-0004',1,'Ordered',46.50,'xxsc','0716786489','Cash','Pending','2026-05-08 15:35:34','2026-05-08 15:48:22',NULL);
+INSERT INTO `orders` VALUES (1,'ORD-2023-001',1,'Delivered',25.48,'123 Maple St, New York','555-0101','Card','Pending','2026-05-08 07:27:59','2026-05-08 16:29:49',NULL),(2,'ORD-2023-002',2,'Ordered',11.50,'456 Oak Avenue, Chicago','555-0102','Cash','Pending','2026-05-08 07:27:59','2026-05-08 12:21:45',NULL),(3,'ORD-2023-003',3,'Processing',21.49,'789 Pine Lane, Los Angeles','555-0103','Online','Paid','2026-05-08 07:27:59','2026-05-08 07:27:59',NULL),(4,'ORD-2026-0004',1,'Ordered',46.50,'xxsc','0716786489','Cash','Pending','2026-05-08 15:35:34','2026-05-08 15:48:22',NULL),(5,'ORD-2026-0005',1,'Pending',12.99,'fc','0716786489','Cash','Pending','2026-05-08 16:32:47','2026-05-08 16:32:47',NULL);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -279,7 +279,7 @@ CREATE TABLE `password_resets` (
   KEY `idx_password_resets_customer` (`customer_id`),
   CONSTRAINT `fk_reset_customer` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_reset_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -288,7 +288,7 @@ CREATE TABLE `password_resets` (
 
 LOCK TABLES `password_resets` WRITE;
 /*!40000 ALTER TABLE `password_resets` DISABLE KEYS */;
-INSERT INTO `password_resets` VALUES (1,'customer',1,'abc123token789xyz','2026-05-08 13:57:59',0,'2026-05-08 07:27:59',NULL,NULL);
+INSERT INTO `password_resets` VALUES (1,'customer',1,'abc123token789xyz','2026-05-08 13:57:59',0,'2026-05-08 07:27:59',NULL,NULL),(2,'user',3,'5d56d6c171027382b6e36bae893938235c841b33db42dea1','2026-05-08 23:20:16',1,'2026-05-08 16:50:16',NULL,NULL);
 /*!40000 ALTER TABLE `password_resets` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -320,7 +320,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Johns','Admin','admin','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','admin@restaurant.com','Admin','2026-05-08 07:27:59','2026-05-08 13:47:11'),(2,'Jane','Manager','jane_m','$2y$10$i5Q.oFz8P1Z.qA9G0G5WHeY8V.QzY6G1g6f5e4d3c2b1a','jane@restaurant.com','Manager','2026-05-08 07:27:59','2026-05-08 07:27:59'),(3,'Robert','Staff','robert_s','$2y$10$i5Q.oFz8P1Z.qA9G0G5WHeY8V.QzY6G1g6f5e4d3c2b1a','robert@restaurant.com','Staff','2026-05-08 07:27:59','2026-05-08 07:27:59');
+INSERT INTO `user` VALUES (1,'Johns','Admin','admin','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','admin@restaurant.com','Admin','2026-05-08 07:27:59','2026-05-08 13:47:11'),(2,'Jane','Manager','jane_m','$2y$10$i5Q.oFz8P1Z.qA9G0G5WHeY8V.QzY6G1g6f5e4d3c2b1a','jane@restaurant.com','Manager','2026-05-08 07:27:59','2026-05-08 07:27:59'),(3,'Robert','Staff','robert_s','$2y$10$1e0/C2jKJKxBbHI5FbePbO91ADwWIIVitI1ifYtF8ASAdv2hIH2lq','robert@restaurant.com','Staff','2026-05-08 07:27:59','2026-05-08 16:52:34');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -902,6 +902,92 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_CreatePasswordReset` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_CreatePasswordReset`(
+    IN p_type VARCHAR(20),
+    IN p_id INT,
+    IN p_token VARCHAR(255)
+)
+BEGIN
+    INSERT INTO password_resets (account_type, account_id, token, expires_at)
+    VALUES (p_type, p_id, p_token, DATE_ADD(NOW(), INTERVAL 1 HOUR));
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_FindAccountByEmail` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_FindAccountByEmail`(IN p_email VARCHAR(255))
+BEGIN
+    -- Combine results from both tables
+    SELECT id, 'user' AS account_type 
+    FROM `user` 
+    WHERE email = p_email
+    
+    UNION ALL
+    
+    SELECT id, 'customer' AS account_type 
+    FROM `customers` 
+    WHERE email = p_email
+    
+    LIMIT 1; 
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_PerformPasswordReset` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_PerformPasswordReset`(
+    IN p_token VARCHAR(255),
+    IN p_type VARCHAR(20),
+    IN p_id INT,
+    IN p_hashed_password VARCHAR(255)
+)
+BEGIN
+    -- Update the correct table based on account_type
+    IF p_type = 'user' THEN
+        UPDATE `user` SET password = p_hashed_password WHERE id = p_id;
+    ELSE
+        UPDATE customers SET password = p_hashed_password WHERE id = p_id;
+    END IF;
+
+    -- Mark the token as used so it cannot be used again
+    UPDATE password_resets SET used = 1 WHERE token = p_token;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `sp_ResetPassword_Updated` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -928,6 +1014,28 @@ BEGIN
     
     -- Mark the token as used
     UPDATE password_resets SET used = 1 WHERE token = p_token;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `sp_VerifyResetToken` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_VerifyResetToken`(IN p_token VARCHAR(255))
+BEGIN
+    SELECT account_type, account_id, expires_at, used 
+    FROM password_resets 
+    WHERE token = p_token 
+    LIMIT 1;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1124,4 +1232,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-05-08 22:01:26
+-- Dump completed on 2026-05-08 22:32:03
