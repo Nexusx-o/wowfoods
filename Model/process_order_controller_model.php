@@ -1,6 +1,6 @@
 <?php
 /**
- * OrderModel - Handles order placement logic
+ * OrderModel - Handles order placement using Stored Procedures
  */
 class OrderModel {
     private $db;
@@ -9,17 +9,13 @@ class OrderModel {
         $this->db = $dbConnection;
     }
 
-    /**
-     * ඇණවුම ඩේටාබේස් එකේ තැන්පත් කිරීම
-     */
     public function placeOrder($orderData, $cartItems) {
         try {
             $this->db->beginTransaction();
 
-            // 1. Orders වගුවට ඇතුළත් කිරීම
-            $sql_order = "INSERT INTO orders (order_number, customer_id, total_amount, status, payment_method, payment_status, delivery_address, delivery_phone) 
-                          VALUES (:order_number, :customer_id, :total, 'Pending', :payment, 'Pending', :address, :phone)";
-            
+            // 1. ප්‍රධාන ඇණවුම ඇතුළත් කර ID එක ලබා ගැනීම
+            // OUT parameter එකක් ඇති නිසා මෙහිදී SQL එක මදක් වෙනස් වේ
+            $sql_order = "CALL CreateNewOrder(:order_number, :customer_id, :total, :payment, :address, :phone, @order_id)";
             $stmt_order = $this->db->prepare($sql_order);
             $stmt_order->execute([
                 ':order_number' => $orderData['order_number'],
@@ -29,13 +25,13 @@ class OrderModel {
                 ':address'      => $orderData['address'],
                 ':phone'        => $orderData['phone']
             ]);
+            $stmt_order->closeCursor();
 
-            $order_id = $this->db->lastInsertId();
+            // SQL හරහා @order_id එක ලබා ගැනීම
+            $order_id = $this->db->query("SELECT @order_id AS id")->fetch(PDO::FETCH_ASSOC)['id'];
 
-            // 2. Order Items වගුවට ඇතුළත් කිරීම
-            $sql_items = "INSERT INTO order_items (order_id, food_id, quantity, unit_price) 
-                          VALUES (:order_id, :food_id, :qty, :unit_price)";
-            $stmt_items = $this->db->prepare($sql_items);
+            // 2. කරත්තයේ ඇති අයිතම ඇතුළත් කිරීම
+            $stmt_items = $this->db->prepare("CALL AddOrderItem(:order_id, :food_id, :qty, :unit_price)");
 
             foreach ($cartItems as $food_id => $item) {
                 $stmt_items->execute([
@@ -44,6 +40,7 @@ class OrderModel {
                     ':qty'        => $item['qty'],
                     ':unit_price' => $item['price']
                 ]);
+                $stmt_items->closeCursor(); // වැදගත්: Loop එක තුළ Cursor එක Close කරන්න
             }
 
             $this->db->commit();
@@ -53,7 +50,7 @@ class OrderModel {
             if ($this->db->inTransaction()) {
                 $this->db->rollBack();
             }
-            error_log("Order Process Error: " . $e->getMessage());
+            error_log("Order Process SP Error: " . $e->getMessage());
             return false;
         }
     }

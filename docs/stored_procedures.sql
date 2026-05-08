@@ -60,3 +60,47 @@ BEGIN
 END //
 
 DELIMITER ;
+
+
+==============================================================================================================
+
+DELIMITER //
+
+CREATE PROCEDURE CreateNewOrder(
+    IN p_order_number VARCHAR(255),
+    IN p_customer_id INT,
+    IN p_total DECIMAL(10,2),
+    IN p_payment VARCHAR(50),
+    IN p_address TEXT,
+    IN p_phone VARCHAR(20),
+    OUT p_order_id INT
+)
+BEGIN
+    INSERT INTO orders (
+        order_number, customer_id, total_amount, 
+        status, payment_method, payment_status, 
+        delivery_address, delivery_phone
+    ) 
+    VALUES (
+        p_order_number, p_customer_id, p_total, 
+        'Pending', p_payment, 'Pending', 
+        p_address, p_phone
+    );
+
+    -- අලුතින් සෑදුණු ID එක ලබා ගැනීම
+    SET p_order_id = LAST_INSERT_ID();
+END //
+
+-- 2. අයිතම ඇතුළත් කිරීම සඳහා තවත් Procedure එකක් (විකල්ප)
+CREATE PROCEDURE AddOrderItem(
+    IN p_order_id INT,
+    IN p_food_id INT,
+    IN p_qty INT,
+    IN p_price DECIMAL(10,2)
+)
+BEGIN
+    INSERT INTO order_items (order_id, food_id, quantity, unit_price) 
+    VALUES (p_order_id, p_food_id, p_qty, p_price);
+END //
+
+DELIMITER ;
