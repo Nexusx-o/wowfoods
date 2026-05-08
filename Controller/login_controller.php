@@ -13,35 +13,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $identifier = cleanInput($_POST['username']);
     $password   = $_POST['password'];
 
-    if (empty($identifier) || empty($password)) {
-        $error = "Please enter both credentials.";
-    } else {
-        $authModel = new AuthModel($pdo);
+    $authModel = new AuthModel($pdo);
+    $user = $authModel->getUserByAnyIdentifier($identifier);
+
+    if ($user && (password_verify($password, $user['password']) || $password === $user['password'])) {
+    
+    // 1. Set common session variables
+    $_SESSION['full_name'] = $user['first_name'] . ' ' . $user['last_name'];
+
+    // 2. Determine if the user is an Admin or a Customer
+    // We check if the 'role' key exists and if it is set to 'admin'
+    if (isset($user['role']) && $user['role'] === 'admin') {
         
-        try {
-            $user = $authModel->getUserByAnyIdentifier($identifier);
-
-            if ($user && password_verify($password, $user['password'])) {
-                // Set common session variables
-                $_SESSION['full_name'] = $user['first_name'] . ' ' . $user['last_name'];
-                $_SESSION['role']      = $user['role'];
-
-                // Redirect based on origin
-                if ($user['account_origin'] === 'user') {
-                    $_SESSION['user_id'] = $user['id'];
-                    redirect('admin/dashboard.php');
-                } else {
-                    $_SESSION['customer_id'] = $user['id'];
-                    redirect('public/menu.php');
-                }
-                exit();
-            } else {
-                $error = "Invalid email/username or password.";
-            }
-        } catch (PDOException $e) {
-            $error = "A system error occurred. Please try again later.";
-        }
+        // --- ADMIN LOGIC ---
+        $_SESSION['role'] = 'admin';
+        $_SESSION['admin_id'] = $user['id']; // Store admin's primary key
+        
+        redirect('controller/admin_dashboard_controller.php');
+        
+    } else {
+        
+        // --- CUSTOMER LOGIC ---
+        // Customers don't have a role, so we treat them as the default
+        $_SESSION['role'] = 'customer'; 
+        $_SESSION['customer_id'] = $user['id']; // Store customer's primary key
+        
+        // Redirect to customer dashboard/menu
+        redirect('controller/customer_dashboard_controller.php');
     }
+    
+    exit();
+} else {
+    $error = "Invalid email/username or password.";
+}
 }
 
 // 2. THIS MUST LOAD THE VIEW (HTML Form), NOT THE TEST CONTROLLER

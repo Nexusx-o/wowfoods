@@ -5,32 +5,31 @@ require_once '../model/signup_model.php';
 
 $error_message = "";
 $success_message = "";
+$database = new Database();
+$db = $database->getConnection();
 
 // Initialize variables for "Sticky" form fields
-$full_name = $email = $phone = $address = $city = "";
+// Added $first_name and $last_name here
+$first_name = $last_name = $email = $phone = $address = $city = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     // 1. Collect and Sanitization
     $first_name = cleanInput($_POST['first_name']);
     $last_name  = cleanInput($_POST['last_name']);
     $email      = filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL);
-    $phone     = cleanInput($_POST['phone']);
-    $address   = cleanInput($_POST['address']);
-    $city      = cleanInput($_POST['city']);
-    $password  = $_POST['password'];
-    $confirm   = $_POST['confirm_password'];
+    $phone      = cleanInput($_POST['phone']);
+    $address    = cleanInput($_POST['address']);
+    $city       = cleanInput($_POST['city']);
+    $password   = $_POST['password'];
+    $confirm    = $_POST['confirm_password'];
 
     // 2. Validation Logic
     if (empty($first_name) || empty($last_name) || empty($email) || empty($phone) || empty($password)) {
-    $error_message = "All required fields must be filled.";
+        $error_message = "All required fields must be filled.";
     }
     // Validate Email Format
     elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error_message = "Please enter a valid email address.";
-    }
-    // Validate Full Name (at least 2 words)
-    elseif (str_word_count($full_name) < 2) {
-        $error_message = "Please enter your full name (First and Last name).";
     }
     // Validate Phone Number (digits only, length between 10 and 15)
     elseif (!preg_match('/^[0-9]{10,15}$/', $phone)) {
@@ -42,16 +41,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     }
     elseif ($password !== $confirm) {
         $error_message = "Passwords do not match.";
-    } 
-    else {
+    }
+else {
         // 3. Model Interaction
-        $customerModel = new CustomerModel($pdo);
+        // Assuming $pdo is defined in your init.php/config
+        $customerModel = new CustomerModel($db);
 
         try {
             if ($customerModel->emailExists($email)) {
                 $error_message = "This email is already registered.";
             } else {
-                $nameParts = explode(' ', $full_name, 2);
                 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
                 
                 $customerData = [
