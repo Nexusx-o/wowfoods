@@ -54,3 +54,12 @@ BEGIN
     FROM customers 
     WHERE email = p_identifier;
 END
+
+DELIMITER //
+CREATE PROCEDURE GetTestUser(IN id INT)
+BEGIN
+    SELECT 'John Doe' AS name, 'admin@example.com' AS email, 'Administrator' AS role;
+END //
+DELIMITER ;
+
+

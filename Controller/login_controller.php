@@ -3,6 +3,10 @@
 require_once '../config/init.php';
 require_once '../model/auth_model.php';
 
+// 1. Initialize the database connection using your new Class
+$database = new Database();
+$pdo = $database->getConnection();
+
 $error = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -40,5 +44,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Load the View
+// 2. THIS MUST LOAD THE VIEW (HTML Form), NOT THE TEST CONTROLLER
 include '../view/login_view.php';
