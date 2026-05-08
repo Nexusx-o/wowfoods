@@ -28,7 +28,7 @@
                     <div class="alert alert-danger py-2 small text-center"><?php echo $error; ?></div>
                 <?php endif; ?>
 
-                <form action="../Controller/login_controller.php" method="POST">
+                <form action="../controller/login_controller.php" method="POST">
                     <div class="mb-3">
                         <label class="form-label text-small-bold">Email or Username</label>
                         <input type="text" name="username" class="form-control" placeholder="Enter your email" required>
