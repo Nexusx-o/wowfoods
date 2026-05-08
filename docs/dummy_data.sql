@@ -65,3 +65,7 @@ INSERT INTO `audit_log` (`table_name`, `action_type`, `record_id`, `new_values`,
 -- -----------------------------------------------------
 INSERT INTO `password_resets` (`account_type`, `account_id`, `token`, `expires_at`) VALUES
 ('customer', 1, 'abc123token789xyz', DATE_ADD(NOW(), INTERVAL 1 HOUR));
+
+UPDATE `user` 
+SET `password` = '$2y$10$8K1p/9ocS2DfXfR.9XfR.u7Z7V8W9X0Y1Z2a3b4c5d6e7f8g9h1i2' 
+WHERE `username` = 'admin';
