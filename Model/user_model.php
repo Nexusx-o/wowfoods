@@ -44,6 +44,18 @@ class UserModel {
         return $result; // Returns ['id' => X, 'account_type' => 'user' OR 'customer'] or false
     }
 
+    /**
+ * Bridges the gap for the "Reset Password" action in the Controller
+ */
+public function resetPassword($id, $hashedPassword) {
+    // This calls the ResetUserPassword stored procedure defined in your SQL
+    $stmt = $this->conn->prepare("CALL ResetUserPassword(:id, :pass)");
+    return $stmt->execute([
+        ':id'   => $id,
+        ':pass' => $hashedPassword
+    ]);
+}
+
     public function createPasswordReset($type, $id, $token) {
     // Safety check: if type is somehow still null, don't even try the SQL
     if (empty($type)) {

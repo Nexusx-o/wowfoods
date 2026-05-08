@@ -1,18 +1,43 @@
 <?php
-require_once '../config/init.php';
-require_once '../Model/User_Model.php';
-checkAdmin(); // Only Admins can manage users
+/**
+ * Controller: User_Controller.php
+ * Path: controller/User_Controller.php
+ */
 
+require_once '../config/init.php';
+require_once '../model/User_Model.php';
+
+// Security: Only Admins should access this controller
+// Assumes checkAdmin() is defined in your session/init files
+checkAdmin(); 
+
+// Initialize Database and Model
 $database = new Database();
 $db = $database->getConnection();
 $userModel = new UserModel($db);
 
+// Get current action and ID from URL
 $action = $_GET['action'] ?? 'manage';
 $id = $_GET['id'] ?? null;
 
 switch ($action) {
+
+    /**
+     * READ: Display all users
+     */
+    case 'manage':
+        // Controller asks Model for data
+        $users = $userModel->getAll(); 
+        // Controller passes data to the View
+        include '../view/manage_user_view.php';
+        break;
+
+    /**
+     * CREATE: Process form submission or show Add form
+     */
     case 'add':
         if (isset($_POST['submit'])) {
+            // Controller prepares and sanitizes data for the Model
             $data = [
                 ':first' => cleanInput($_POST['first_name']),
                 ':last'  => cleanInput($_POST['last_name']),
@@ -21,55 +46,71 @@ switch ($action) {
                 ':email' => cleanInput($_POST['email']),
                 ':role'  => $_POST['role']
             ];
-            if ($userModel->create($data)) redirect('Controller/User_Controller.php?action=manage');
+
+            // Controller tells Model to save
+            if ($userModel->create($data)) {
+                redirect('controller/User_Controller.php?action=manage&msg=added');
+            } else {
+                $error = "Failed to create user. Email or Username might be taken.";
+            }
         }
         include '../view/add_user_view.php';
         break;
 
-   case 'update':
-    $id = $_GET['id'];
-    // 1. Fetch user data to populate the form
-    $user = $userModel->getById($id);
+    /**
+     * UPDATE: Fetch existing data and process updates
+     */
+    case 'update':
+        if (!$id) redirect('controller/User_Controller.php?action=manage');
 
-    // 2. If form is submitted, process the update
-    if (isset($_POST['submit'])) {
-        $updateData = [
-            ':id'    => $id,
-            ':first' => cleanInput($_POST['first_name']),
-            ':last'  => cleanInput($_POST['last_name']),
-            ':user'  => cleanInput($_POST['username']),
-            ':email' => cleanInput($_POST['email']),
-            ':role'  => $_POST['role']
-        ];
-        if ($userModel->update($updateData)) {
-            redirect('Controller/User_Controller.php?action=manage&msg=user_updated');
-        }
-    }
-    include '../view/update_user_view.php';
-    break;
+        // Controller fetches user data to pre-fill the form
+        $user = $userModel->getById($id);
 
-    case 'delete':
-        if ($id != $_SESSION['user_id']) { // Prevent self-deletion
-            $userModel->delete($id);
+        if (isset($_POST['submit'])) {
+            $updateData = [
+                ':id'    => $id,
+                ':first' => cleanInput($_POST['first_name']),
+                ':last'  => cleanInput($_POST['last_name']),
+                ':user'  => cleanInput($_POST['username']),
+                ':email' => cleanInput($_POST['email']),
+                ':role'  => $_POST['role']
+            ];
+
+            if ($userModel->update($updateData)) {
+                redirect('controller/User_Controller.php?action=manage&msg=updated');
+            }
         }
-        redirect('Controller/User_Controller.php?action=manage');
+        include '../view/update_user_view.php';
         break;
 
-    case 'reset_password':
-    // Define your default password
-    $defaultPassword = "WowFood123"; 
-    $hashedPassword = password_hash($defaultPassword, PASSWORD_DEFAULT);
-
-    if ($id) {
-        if ($userModel->resetPassword($id, $hashedPassword)) {
-            // Redirect with a success message
-            redirect('Controller/User_Controller.php?action=manage&msg=pw_reset');
+    /**
+     * DELETE: Remove user (preventing self-deletion)
+     */
+    case 'delete':
+        if ($id && $id != $_SESSION['user_id']) {
+            $userModel->delete($id);
+            redirect('controller/User_Controller.php?action=manage&msg=deleted');
+        } else {
+            // Cannot delete yourself
+            redirect('controller/User_Controller.php?action=manage&msg=err_self_delete');
         }
-    }
-    break;
+        break;
+
+    /**
+     * UTILITY: Reset Password to default
+     */
+    case 'reset_password':
+        if ($id) {
+            $defaultPassword = "WowFood123"; 
+            $hashedPassword = password_hash($defaultPassword, PASSWORD_DEFAULT);
+            
+            if ($userModel->resetPassword($id, $hashedPassword)) {
+                redirect('controller/User_Controller.php?action=manage&msg=pw_reset');
+            }
+        }
+        break;
 
     default:
-        $users = $userModel->getAll();
-        include '../view/manage_user_view.php';
+        redirect('controller/User_Controller.php?action=manage');
         break;
 }

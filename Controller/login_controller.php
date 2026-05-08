@@ -19,6 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($user && (password_verify($password, $user['password']) || $password === $user['password'])) {
     
     // 1. Set common session variables
+    $_SESSION['first_name'] = $user['first_name'];
     $_SESSION['full_name'] = $user['first_name'] . ' ' . $user['last_name'];
 
     // 2. Determine if the user is an Admin or a Customer
