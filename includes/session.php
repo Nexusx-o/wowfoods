@@ -12,7 +12,7 @@ function checkLogin() {
 }
 
 function checkAdmin() {
-    if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Admin') {
+    if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
         header("Location: ../index.php?error=unauthorized");
         exit();
     }

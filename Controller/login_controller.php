@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // 2. Determine if the user is an Admin or a Customer
     // We check if the 'role' key exists and if it is set to 'admin'
-    if (isset($user['role']) && $user['role'] === 'admin') {
+    if (isset($user['role']) && $user['role'] === 'Admin') {
         
         // --- ADMIN LOGIC ---
         $_SESSION['role'] = 'admin';
