@@ -66,17 +66,17 @@ $db = $database->getConnection();
                 <div class="col-md-4 mb-4">
                     <i class="fas fa-shipping-fast fa-3x text-danger mb-3"></i>
                     <h4>30 Minute Delivery</h4>
-                    <p class="text-muted">Fastest delivery in the city or your money back.</p>
+                    <p class="text-secondary">Fastest delivery in the city or your money back.</p>
                 </div>
                 <div class="col-md-4 mb-4">
                     <i class="fas fa-utensils fa-3x text-danger mb-3"></i>
                     <h4>Quality Ingredients</h4>
-                    <p class="text-muted">We only partner with top-rated local restaurants.</p>
+                    <p class="text-secondary">We only partner with top-rated local restaurants.</p>
                 </div>
                 <div class="col-md-4 mb-4">
                     <i class="fas fa-headset fa-3x text-danger mb-3"></i>
                     <h4>24/7 Support</h4>
-                    <p class="text-muted">Our team is always here to help with your cravings.</p>
+                    <p class="text-secondary">Our team is always here to help with your cravings.</p>
                 </div>
             </div>
         </div>
@@ -121,7 +121,7 @@ try {
             </div>
         <?php endforeach; 
     else: ?>
-        <div class="col-12 text-center py-5 text-muted">
+        <div class="col-12 text-center py-5 text-secondary">
             <p>No popular categories available right now.</p>
         </div>
 <?php 
@@ -140,14 +140,14 @@ try {
             <div class="row">
                 <div class="col-md-4 mb-4">
                     <h3 class="fw-bold"><span class="text-danger">WOW</span>FOOD</h3>
-                    <p class="text-muted">Redefining how you eat. Reliable, fast, and always delicious.</p>
+                    <p class="text-secondary">Redefining how you eat. Reliable, fast, and always delicious.</p>
                 </div>
                 <div class="col-md-4 mb-4">
                     <h5>Quick Links</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-muted text-decoration-none">About Us</a></li>
-                        <li><a href="#" class="text-muted text-decoration-none">Terms & Conditions</a></li>
-                        <li><a href="#" class="text-muted text-decoration-none">Privacy Policy</a></li>
+                        <li><a href="#" class="text-secondary text-decoration-none">About Us</a></li>
+                        <li><a href="#" class="text-secondary text-decoration-none">Terms & Conditions</a></li>
+                        <li><a href="#" class="text-secondary text-decoration-none">Privacy Policy</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4 mb-4 text-center">
@@ -160,7 +160,7 @@ try {
                 </div>
             </div>
             <hr class="bg-secondary">
-            <p class="text-center text-muted mb-0">&copy; 2026 WOWFOOD Inc. All Rights Reserved.</p>
+            <p class="text-center text-secondary mb-0">&copy; 2026 WOWFOOD Inc. All Rights Reserved.</p>
         </div>
     </footer>
 

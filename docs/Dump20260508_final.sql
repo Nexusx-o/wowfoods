@@ -77,7 +77,7 @@ CREATE TABLE `category` (
   KEY `fk_cat_updated_by` (`updated_by`),
   CONSTRAINT `fk_cat_created_by` FOREIGN KEY (`created_by`) REFERENCES `user` (`id`) ON DELETE SET NULL,
   CONSTRAINT `fk_cat_updated_by` FOREIGN KEY (`updated_by`) REFERENCES `user` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -86,7 +86,7 @@ CREATE TABLE `category` (
 
 LOCK TABLES `category` WRITE;
 /*!40000 ALTER TABLE `category` DISABLE KEYS */;
-INSERT INTO `category` VALUES (1,'CAT001','Italian Pizza','pizza.jpg','Yes','2026-05-08 07:27:59','2026-05-08 07:27:59',1,NULL),(2,'CAT002','Gourmet Burgers','burger.jpg','Yes','2026-05-08 07:27:59','2026-05-08 07:27:59',1,NULL),(3,'CAT003','Fresh Salads','salad.jpg','Yes','2026-05-08 07:27:59','2026-05-08 07:27:59',1,NULL),(4,'CAT004','Beverages','drinks.jpg','Yes','2026-05-08 07:27:59','2026-05-08 07:27:59',1,NULL),(5,'CAT005','Desserts','dessert.jpg','No','2026-05-08 07:27:59','2026-05-08 07:27:59',1,NULL);
+INSERT INTO `category` VALUES (1,'CAT001','Italian Pizza','Category_511.jpg','Yes','2026-05-08 07:27:59','2026-05-08 16:20:46',1,NULL),(2,'CAT002','Gourmet Burgers','burger.jpg','Yes','2026-05-08 07:27:59','2026-05-08 07:27:59',1,NULL),(3,'CAT003','Fresh Salads','salad.jpg','Yes','2026-05-08 07:27:59','2026-05-08 07:27:59',1,NULL),(4,'CAT004','Beverages','drinks.jpg','Yes','2026-05-08 07:27:59','2026-05-08 07:27:59',1,NULL),(5,'CAT005','Desserts','dessert.jpg','No','2026-05-08 07:27:59','2026-05-08 07:27:59',1,NULL),(8,'CAT2464','xdd','','Yes','2026-05-08 14:20:34','2026-05-08 14:20:34',NULL,NULL);
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -162,7 +162,7 @@ CREATE TABLE `foods` (
   CONSTRAINT `fk_food_created_by` FOREIGN KEY (`created_by`) REFERENCES `user` (`id`) ON DELETE SET NULL,
   CONSTRAINT `fk_food_updated_by` FOREIGN KEY (`updated_by`) REFERENCES `user` (`id`) ON DELETE SET NULL,
   CONSTRAINT `chk_food_price` CHECK ((`price` > 0))
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -171,7 +171,7 @@ CREATE TABLE `foods` (
 
 LOCK TABLES `foods` WRITE;
 /*!40000 ALTER TABLE `foods` DISABLE KEYS */;
-INSERT INTO `foods` VALUES (1,'F001','Margherita Pizza','Classic tomato, mozzarella, and basil',NULL,12.99,1,'Yes','2026-05-08 07:27:59','2026-05-08 07:27:59',1,NULL),(2,'F002','Pepperoni Feast','Double pepperoni with extra cheese',NULL,15.50,1,'Yes','2026-05-08 07:27:59','2026-05-08 07:27:59',1,NULL),(3,'F003','Classic Cheeseburger','Angus beef patty with cheddar cheese',NULL,9.99,2,'Yes','2026-05-08 07:27:59','2026-05-08 07:27:59',1,NULL),(4,'F004','Bacon BBQ Burger','Beef patty, crispy bacon, and BBQ sauce',NULL,11.50,2,'Yes','2026-05-08 07:27:59','2026-05-08 07:27:59',1,NULL),(5,'F005','Caesar Salad','Romaine lettuce with Caesar dressing',NULL,8.50,3,'Yes','2026-05-08 07:27:59','2026-05-08 07:27:59',1,NULL),(6,'F006','Iced Lemon Tea','Freshly brewed tea with lemon',NULL,3.50,4,'Yes','2026-05-08 07:27:59','2026-05-08 07:27:59',1,NULL),(7,'F007','Coca Cola','Chilled 500ml bottle',NULL,2.50,4,'Yes','2026-05-08 07:27:59','2026-05-08 07:27:59',1,NULL);
+INSERT INTO `foods` VALUES (1,'F001','Margherita Pizza','Classic tomato, mozzarella, and basil',NULL,12.99,1,'Yes','2026-05-08 07:27:59','2026-05-08 07:27:59',1,NULL),(2,'F002','Pepperoni Feast','Double pepperoni with extra cheese',NULL,15.50,1,'Yes','2026-05-08 07:27:59','2026-05-08 07:27:59',1,NULL),(3,'F003','Classic Cheeseburger','Angus beef patty with cheddar cheese',NULL,9.99,2,'Yes','2026-05-08 07:27:59','2026-05-08 07:27:59',1,NULL),(4,'F004','Bacon BBQ Burger','Beef patty, crispy bacon, and BBQ sauce',NULL,11.50,2,'Yes','2026-05-08 07:27:59','2026-05-08 07:27:59',1,NULL),(5,'F005','Caesar Salad','Romaine lettuce with Caesar dressing',NULL,8.50,3,'Yes','2026-05-08 07:27:59','2026-05-08 07:27:59',1,NULL),(6,'F006','Iced Lemon Tea','Freshly brewed tea with lemon',NULL,3.50,4,'Yes','2026-05-08 07:27:59','2026-05-08 07:27:59',1,NULL),(7,'F007','Coca Cola','Chilled 500ml bottle',NULL,2.50,4,'Yes','2026-05-08 07:27:59','2026-05-08 07:27:59',1,NULL),(8,'FD1345','sdx','sc','',18.50,1,'Yes','2026-05-08 14:27:57','2026-05-08 14:27:57',NULL,NULL),(9,'FD5977','ad','xzx','Food_137.jpg',3.99,3,'Yes','2026-05-08 16:30:21','2026-05-08 16:30:21',NULL,NULL);
 /*!40000 ALTER TABLE `foods` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -196,7 +196,7 @@ CREATE TABLE `order_items` (
   CONSTRAINT `fk_item_order` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
   CONSTRAINT `chk_item_price` CHECK ((`unit_price` > 0)),
   CONSTRAINT `chk_item_qty` CHECK ((`quantity` > 0))
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -205,7 +205,7 @@ CREATE TABLE `order_items` (
 
 LOCK TABLES `order_items` WRITE;
 /*!40000 ALTER TABLE `order_items` DISABLE KEYS */;
-INSERT INTO `order_items` (`id`, `order_id`, `food_id`, `quantity`, `unit_price`) VALUES (1,1,1,1,12.99),(2,1,2,1,15.50),(3,2,4,1,11.50),(4,3,5,1,8.50),(5,3,1,1,12.99);
+INSERT INTO `order_items` (`id`, `order_id`, `food_id`, `quantity`, `unit_price`) VALUES (1,1,1,1,12.99),(2,1,2,1,15.50),(3,2,4,1,11.50),(4,3,5,1,8.50),(5,3,1,1,12.99),(6,4,2,3,15.50);
 /*!40000 ALTER TABLE `order_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -240,7 +240,7 @@ CREATE TABLE `orders` (
   CONSTRAINT `fk_order_cust` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`),
   CONSTRAINT `fk_order_updated_by` FOREIGN KEY (`updated_by`) REFERENCES `user` (`id`) ON DELETE SET NULL,
   CONSTRAINT `chk_order_total` CHECK ((`total_amount` >= 0))
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -249,7 +249,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (1,'ORD-2023-001',1,'On Delivery',25.48,'123 Maple St, New York','555-0101','Card','Pending','2026-05-08 07:27:59','2026-05-08 12:21:40',NULL),(2,'ORD-2023-002',2,'Ordered',11.50,'456 Oak Avenue, Chicago','555-0102','Cash','Pending','2026-05-08 07:27:59','2026-05-08 12:21:45',NULL),(3,'ORD-2023-003',3,'Processing',21.49,'789 Pine Lane, Los Angeles','555-0103','Online','Paid','2026-05-08 07:27:59','2026-05-08 07:27:59',NULL);
+INSERT INTO `orders` VALUES (1,'ORD-2023-001',1,'Delivered',25.48,'123 Maple St, New York','555-0101','Card','Pending','2026-05-08 07:27:59','2026-05-08 16:29:49',NULL),(2,'ORD-2023-002',2,'Ordered',11.50,'456 Oak Avenue, Chicago','555-0102','Cash','Pending','2026-05-08 07:27:59','2026-05-08 12:21:45',NULL),(3,'ORD-2023-003',3,'Processing',21.49,'789 Pine Lane, Los Angeles','555-0103','Online','Paid','2026-05-08 07:27:59','2026-05-08 07:27:59',NULL),(4,'ORD-2026-0004',1,'Ordered',46.50,'xxsc','0716786489','Cash','Pending','2026-05-08 15:35:34','2026-05-08 15:48:22',NULL);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -311,7 +311,7 @@ CREATE TABLE `user` (
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -349,6 +349,27 @@ SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = @saved_cs_client;
 
 --
+-- Temporary view structure for view `vw_food_details`
+--
+
+DROP TABLE IF EXISTS `vw_food_details`;
+/*!50001 DROP VIEW IF EXISTS `vw_food_details`*/;
+SET @saved_cs_client     = @@character_set_client;
+/*!50503 SET character_set_client = utf8mb4 */;
+/*!50001 CREATE VIEW `vw_food_details` AS SELECT 
+ 1 AS `food_id`,
+ 1 AS `food_code`,
+ 1 AS `food_title`,
+ 1 AS `price`,
+ 1 AS `image_name`,
+ 1 AS `active`,
+ 1 AS `category_id`,
+ 1 AS `category_name`,
+ 1 AS `category_image`,
+ 1 AS `category_active`*/;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Temporary view structure for view `vw_order_master`
 --
 
@@ -369,6 +390,8 @@ SET @saved_cs_client     = @@character_set_client;
  1 AS `created_at`,
  1 AS `updated_at`,
  1 AS `updated_by`,
+ 1 AS `first_name`,
+ 1 AS `last_name`,
  1 AS `customer_full_name`,
  1 AS `customer_email`,
  1 AS `customer_phone`*/;
@@ -472,11 +495,11 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `AddUser`(
-    IN p_first VARCHAR(50), 
-    IN p_last VARCHAR(50), 
-    IN p_user VARCHAR(100), 
-    IN p_pass VARCHAR(255), 
-    IN p_email VARCHAR(150), 
+    IN p_first VARCHAR(50),
+    IN p_last VARCHAR(50),
+    IN p_user VARCHAR(100),
+    IN p_pass VARCHAR(255),
+    IN p_email VARCHAR(150),
     IN p_role ENUM('Admin', 'Manager', 'Staff')
 )
 BEGIN
@@ -1057,6 +1080,24 @@ DELIMITER ;
 /*!50001 SET collation_connection      = @saved_col_connection */;
 
 --
+-- Final view structure for view `vw_food_details`
+--
+
+/*!50001 DROP VIEW IF EXISTS `vw_food_details`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8mb4 */;
+/*!50001 SET character_set_results     = utf8mb4 */;
+/*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `vw_food_details` AS select `f`.`id` AS `food_id`,`f`.`food_code` AS `food_code`,`f`.`title` AS `food_title`,`f`.`price` AS `price`,`f`.`image_name` AS `image_name`,`f`.`active` AS `active`,`f`.`category_id` AS `category_id`,`c`.`title` AS `category_name`,`c`.`image_name` AS `category_image`,`c`.`active` AS `category_active` from (`foods` `f` join `category` `c` on((`f`.`category_id` = `c`.`id`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
 -- Final view structure for view `vw_order_master`
 --
 
@@ -1069,7 +1110,7 @@ DELIMITER ;
 /*!50001 SET collation_connection      = utf8mb4_0900_ai_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `vw_order_master` AS select `o`.`id` AS `id`,`o`.`order_number` AS `order_number`,`o`.`customer_id` AS `customer_id`,`o`.`status` AS `status`,`o`.`total_amount` AS `total_amount`,`o`.`delivery_address` AS `delivery_address`,`o`.`delivery_phone` AS `delivery_phone`,`o`.`payment_method` AS `payment_method`,`o`.`payment_status` AS `payment_status`,`o`.`created_at` AS `created_at`,`o`.`updated_at` AS `updated_at`,`o`.`updated_by` AS `updated_by`,concat(`c`.`first_name`,' ',`c`.`last_name`) AS `customer_full_name`,`c`.`email` AS `customer_email`,`c`.`phone` AS `customer_phone` from (`orders` `o` join `customers` `c` on((`o`.`customer_id` = `c`.`id`))) */;
+/*!50001 VIEW `vw_order_master` AS select `o`.`id` AS `id`,`o`.`order_number` AS `order_number`,`o`.`customer_id` AS `customer_id`,`o`.`status` AS `status`,`o`.`total_amount` AS `total_amount`,`o`.`delivery_address` AS `delivery_address`,`o`.`delivery_phone` AS `delivery_phone`,`o`.`payment_method` AS `payment_method`,`o`.`payment_status` AS `payment_status`,`o`.`created_at` AS `created_at`,`o`.`updated_at` AS `updated_at`,`o`.`updated_by` AS `updated_by`,`c`.`first_name` AS `first_name`,`c`.`last_name` AS `last_name`,concat(`c`.`first_name`,' ',`c`.`last_name`) AS `customer_full_name`,`c`.`email` AS `customer_email`,`c`.`phone` AS `customer_phone` from (`orders` `o` join `customers` `c` on((`o`.`customer_id` = `c`.`id`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -1083,4 +1124,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-05-08 19:34:58
+-- Dump completed on 2026-05-08 22:01:26
