@@ -129,7 +129,7 @@ CREATE PROCEDURE sp_ResetPassword(
     IN p_new_password VARCHAR(255)
 )
 BEGIN
-    --  Update the correct account table
+    --  Update the correct account table 
     IF p_account_type = 'user' THEN
         UPDATE `user` SET password = p_new_password WHERE id = p_account_id;
     ELSE
