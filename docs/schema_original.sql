@@ -6,7 +6,7 @@ CREATE SCHEMA IF NOT EXISTS `food_order` DEFAULT CHARACTER SET utf8mb4 COLLATE u
 USE `food_order`;
 
 -- -----------------------------------------------------
--- Table: user (Administrative Staff)
+-- Table: user
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `user` (
   `id` INT NOT NULL AUTO_INCREMENT,
@@ -57,14 +57,14 @@ CREATE TABLE IF NOT EXISTS `category` (
 ) ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table: customers
+-- Table: customers (Updated with Password after Email)
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `customers` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `first_name` VARCHAR(50) NOT NULL,
   `last_name` VARCHAR(50) NOT NULL,
   `email` VARCHAR(150) NOT NULL UNIQUE,
-  `password` VARCHAR(255) NOT NULL,
+  `password` VARCHAR(255) NOT NULL, -- Positioned per migration
   `phone` VARCHAR(20) NOT NULL,
   `address` VARCHAR(255) NOT NULL,
   `city` VARCHAR(100),
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `customers` (
 ) ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table: password_resets
+-- Table: password_resets (Newly Created)
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `password_resets` (
   `id` INT NOT NULL AUTO_INCREMENT,
@@ -96,14 +96,14 @@ CREATE TABLE IF NOT EXISTS `password_resets` (
 ) ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table: foods
+-- Table: foods (Updated with image_name after description)
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `foods` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `food_code` VARCHAR(10) NOT NULL UNIQUE,
   `title` VARCHAR(100) NOT NULL,
   `description` TEXT,
-  `image_name` VARCHAR(255) NULL,
+  `image_name` VARCHAR(255) NULL, -- Positioned per migration
   `price` DECIMAL(10,2) NOT NULL,
   `category_id` INT NOT NULL,
   `active` ENUM('Yes', 'No') DEFAULT 'Yes',
@@ -126,7 +126,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `order_number` VARCHAR(20) NOT NULL UNIQUE,
   `customer_id` INT NOT NULL,
-  `status` VARCHAR(50) DEFAULT 'Ordered',
+  `status` ENUM('Pending', 'Confirmed', 'Preparing', 'Out for Delivery', 'Delivered', 'Cancelled') DEFAULT 'Pending',
   `total_amount` DECIMAL(10,2) NOT NULL,
   `delivery_address` VARCHAR(255) NOT NULL,
   `delivery_phone` VARCHAR(20) NOT NULL,
@@ -159,3 +159,5 @@ CREATE TABLE IF NOT EXISTS `order_items` (
   CONSTRAINT `fk_item_order` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_item_food` FOREIGN KEY (`food_id`) REFERENCES `foods` (`id`)
 ) ENGINE = InnoDB;
+
+ALTER TABLE `orders` MODIFY COLUMN `status` VARCHAR(50) DEFAULT 'Ordered';
