@@ -89,6 +89,44 @@ LOCK TABLES `category` WRITE;
 INSERT INTO `category` VALUES (1,'CAT001','Italian Pizza','Category_511.jpg','Yes','2026-05-08 07:27:59','2026-05-08 16:20:46',1,NULL),(2,'CAT002','Gourmet Burgers','burger.jpg','Yes','2026-05-08 07:27:59','2026-05-08 07:27:59',1,NULL),(3,'CAT003','Fresh Salads','salad.jpg','Yes','2026-05-08 07:27:59','2026-05-08 07:27:59',1,NULL),(4,'CAT004','Beverages','drinks.jpg','Yes','2026-05-08 07:27:59','2026-05-08 07:27:59',1,NULL),(5,'CAT005','Desserts','dessert.jpg','No','2026-05-08 07:27:59','2026-05-08 07:27:59',1,NULL),(8,'CAT2464','xdd','','Yes','2026-05-08 14:20:34','2026-05-08 14:20:34',NULL,NULL);
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `trg_cat_insert` AFTER INSERT ON `category` FOR EACH ROW BEGIN
+    INSERT INTO audit_log (table_name, action_type, record_id, new_values, user_id)
+    VALUES ('category', 'INSERT', NEW.id, JSON_OBJECT('code', NEW.category_code, 'title', NEW.title), @current_user_id);
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `trg_cat_update` AFTER UPDATE ON `category` FOR EACH ROW BEGIN
+    INSERT INTO audit_log (table_name, action_type, record_id, old_values, new_values, user_id)
+    VALUES ('category', 'UPDATE', NEW.id, 
+        JSON_OBJECT('title', OLD.title, 'active', OLD.active), 
+        JSON_OBJECT('title', NEW.title, 'active', NEW.active), @current_user_id);
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `customers`
@@ -118,7 +156,7 @@ CREATE TABLE `customers` (
   KEY `fk_cust_updated_by` (`updated_by`),
   CONSTRAINT `fk_cust_created_by` FOREIGN KEY (`created_by`) REFERENCES `user` (`id`) ON DELETE SET NULL,
   CONSTRAINT `fk_cust_updated_by` FOREIGN KEY (`updated_by`) REFERENCES `user` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -127,9 +165,48 @@ CREATE TABLE `customers` (
 
 LOCK TABLES `customers` WRITE;
 /*!40000 ALTER TABLE `customers` DISABLE KEYS */;
-INSERT INTO `customers` VALUES (1,'Alice','Smith','alice@gmail.com','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','555-0101','123 Maple St','New York','2026-05-08 07:27:59','2026-05-08 08:12:56',1,NULL),(2,'Bob','Johnson','bob@yahoo.com','pass456','555-0102','456 Oak Avenue','Chicago','2026-05-08 07:27:59','2026-05-08 07:27:59',1,NULL),(3,'Charlie','Brown','charlie@outlook.com','pass789','555-0103','789 Pine Lane','Los Angeles','2026-05-08 07:27:59','2026-05-08 07:27:59',1,NULL);
+INSERT INTO `customers` VALUES (1,'Alice','Smith','alice@gmail.com','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','555-0101','123 Maple St','New York','2026-05-08 07:27:59','2026-05-08 08:12:56',1,NULL),(2,'Bob','Johnson','bob@yahoo.com','pass456','555-0102','456 Oak Avenue','Chicago','2026-05-08 07:27:59','2026-05-08 07:27:59',1,NULL),(3,'Charlie','Brown','charlie@outlook.com','pass789','555-0103','789 Pine Lane','Los Angeles','2026-05-08 07:27:59','2026-05-08 07:27:59',1,NULL),(4,'xxs','sds','doc@gmail.com','$2y$10$LrkCOtW/wyBqJoHBvTTqhOLqFAh/AIJW08vnc7ltt8a7SJ/G7CfGi','0716786489','ada','mwthgama','2026-05-08 17:05:30','2026-05-08 17:05:30',NULL,NULL);
 /*!40000 ALTER TABLE `customers` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `trg_cust_insert` AFTER INSERT ON `customers` FOR EACH ROW BEGIN
+    INSERT INTO audit_log (table_name, action_type, record_id, new_values, customer_id)
+    VALUES ('customers', 'INSERT', NEW.id, JSON_OBJECT('email', NEW.email, 'city', NEW.city), NEW.id);
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `trg_cust_update` AFTER UPDATE ON `customers` FOR EACH ROW BEGIN
+    INSERT INTO audit_log (table_name, action_type, record_id, old_values, new_values, user_id, customer_id)
+    VALUES ('customers', 'UPDATE', NEW.id, 
+        JSON_OBJECT('phone', OLD.phone, 'address', OLD.address), 
+        JSON_OBJECT('phone', NEW.phone, 'address', NEW.address), 
+        IF(@current_user_type = 'staff', @current_user_id, NULL), IF(@current_user_type = 'customer', @current_user_id, NULL));
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `foods`
@@ -174,6 +251,60 @@ LOCK TABLES `foods` WRITE;
 INSERT INTO `foods` VALUES (1,'F001','Margherita Pizza','Classic tomato, mozzarella, and basil',NULL,12.99,1,'Yes','2026-05-08 07:27:59','2026-05-08 07:27:59',1,NULL),(2,'F002','Pepperoni Feast','Double pepperoni with extra cheese',NULL,15.50,1,'Yes','2026-05-08 07:27:59','2026-05-08 07:27:59',1,NULL),(3,'F003','Classic Cheeseburger','Angus beef patty with cheddar cheese',NULL,9.99,2,'Yes','2026-05-08 07:27:59','2026-05-08 07:27:59',1,NULL),(4,'F004','Bacon BBQ Burger','Beef patty, crispy bacon, and BBQ sauce',NULL,11.50,2,'Yes','2026-05-08 07:27:59','2026-05-08 07:27:59',1,NULL),(5,'F005','Caesar Salad','Romaine lettuce with Caesar dressing',NULL,8.50,3,'Yes','2026-05-08 07:27:59','2026-05-08 07:27:59',1,NULL),(6,'F006','Iced Lemon Tea','Freshly brewed tea with lemon',NULL,3.50,4,'Yes','2026-05-08 07:27:59','2026-05-08 07:27:59',1,NULL),(7,'F007','Coca Cola','Chilled 500ml bottle',NULL,2.50,4,'Yes','2026-05-08 07:27:59','2026-05-08 07:27:59',1,NULL),(8,'FD1345','sdx','sc','',18.50,1,'Yes','2026-05-08 14:27:57','2026-05-08 14:27:57',NULL,NULL),(9,'FD5977','ad','xzx','Food_137.jpg',3.99,3,'Yes','2026-05-08 16:30:21','2026-05-08 16:30:21',NULL,NULL);
 /*!40000 ALTER TABLE `foods` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `trg_food_insert` AFTER INSERT ON `foods` FOR EACH ROW BEGIN
+    INSERT INTO audit_log (table_name, action_type, record_id, new_values, user_id)
+    VALUES ('foods', 'INSERT', NEW.id, JSON_OBJECT('code', NEW.food_code, 'title', NEW.title, 'price', NEW.price), @current_user_id);
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `trg_food_update` AFTER UPDATE ON `foods` FOR EACH ROW BEGIN
+    INSERT INTO audit_log (table_name, action_type, record_id, old_values, new_values, user_id)
+    VALUES ('foods', 'UPDATE', NEW.id, 
+        JSON_OBJECT('price', OLD.price, 'active', OLD.active), 
+        JSON_OBJECT('price', NEW.price, 'active', NEW.active), @current_user_id);
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `trg_food_delete` AFTER DELETE ON `foods` FOR EACH ROW INSERT INTO audit_log (table_name, action_type, record_id, old_values, user_id) 
+    VALUES ('foods', 'DELETE', OLD.id, JSON_OBJECT('title', OLD.title), @current_user_id) */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `order_items`
@@ -252,6 +383,61 @@ LOCK TABLES `orders` WRITE;
 INSERT INTO `orders` VALUES (1,'ORD-2023-001',1,'Delivered',25.48,'123 Maple St, New York','555-0101','Card','Pending','2026-05-08 07:27:59','2026-05-08 16:29:49',NULL),(2,'ORD-2023-002',2,'Ordered',11.50,'456 Oak Avenue, Chicago','555-0102','Cash','Pending','2026-05-08 07:27:59','2026-05-08 12:21:45',NULL),(3,'ORD-2023-003',3,'Processing',21.49,'789 Pine Lane, Los Angeles','555-0103','Online','Paid','2026-05-08 07:27:59','2026-05-08 07:27:59',NULL),(4,'ORD-2026-0004',1,'Ordered',46.50,'xxsc','0716786489','Cash','Pending','2026-05-08 15:35:34','2026-05-08 15:48:22',NULL),(5,'ORD-2026-0005',1,'Pending',12.99,'fc','0716786489','Cash','Pending','2026-05-08 16:32:47','2026-05-08 16:32:47',NULL);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `trg_order_insert` AFTER INSERT ON `orders` FOR EACH ROW BEGIN
+    INSERT INTO audit_log (table_name, action_type, record_id, new_values, customer_id)
+    VALUES ('orders', 'INSERT', NEW.id, JSON_OBJECT('order_no', NEW.order_number, 'total', NEW.total_amount), NEW.customer_id);
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `trg_order_update` AFTER UPDATE ON `orders` FOR EACH ROW BEGIN
+    INSERT INTO audit_log (table_name, action_type, record_id, old_values, new_values, user_id, customer_id)
+    VALUES ('orders', 'UPDATE', NEW.id, 
+        JSON_OBJECT('status', OLD.status, 'pay_status', OLD.payment_status), 
+        JSON_OBJECT('status', NEW.status, 'pay_status', NEW.payment_status), 
+        IF(@current_user_type = 'staff', @current_user_id, NULL), IF(@current_user_type = 'customer', @current_user_id, NULL));
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `trg_order_delete` AFTER DELETE ON `orders` FOR EACH ROW INSERT INTO audit_log (table_name, action_type, record_id, old_values, user_id) 
+    VALUES ('orders', 'DELETE', OLD.id, JSON_OBJECT('order_no', OLD.order_number), @current_user_id) */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `password_resets`
@@ -323,6 +509,60 @@ LOCK TABLES `user` WRITE;
 INSERT INTO `user` VALUES (1,'Johns','Admin','admin','$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi','admin@restaurant.com','Admin','2026-05-08 07:27:59','2026-05-08 13:47:11'),(2,'Jane','Manager','jane_m','$2y$10$i5Q.oFz8P1Z.qA9G0G5WHeY8V.QzY6G1g6f5e4d3c2b1a','jane@restaurant.com','Manager','2026-05-08 07:27:59','2026-05-08 07:27:59'),(3,'Robert','Staff','robert_s','$2y$10$1e0/C2jKJKxBbHI5FbePbO91ADwWIIVitI1ifYtF8ASAdv2hIH2lq','robert@restaurant.com','Staff','2026-05-08 07:27:59','2026-05-08 16:52:34');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `trg_user_insert` AFTER INSERT ON `user` FOR EACH ROW BEGIN
+    INSERT INTO audit_log (table_name, action_type, record_id, new_values, user_id)
+    VALUES ('user', 'INSERT', NEW.id, JSON_OBJECT('user', NEW.username, 'role', NEW.role, 'email', NEW.email), @current_user_id);
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `trg_user_update` AFTER UPDATE ON `user` FOR EACH ROW BEGIN
+    INSERT INTO audit_log (table_name, action_type, record_id, old_values, new_values, user_id)
+    VALUES ('user', 'UPDATE', NEW.id, 
+        JSON_OBJECT('role', OLD.role, 'email', OLD.email), 
+        JSON_OBJECT('role', NEW.role, 'email', NEW.email), @current_user_id);
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `trg_user_delete` AFTER DELETE ON `user` FOR EACH ROW INSERT INTO audit_log (table_name, action_type, record_id, old_values, user_id) 
+    VALUES ('user', 'DELETE', OLD.id, JSON_OBJECT('user', OLD.username), @current_user_id) */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Temporary view structure for view `vw_food_catalog`
@@ -1232,4 +1472,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-05-08 22:32:03
+-- Dump completed on 2026-05-08 22:50:46
