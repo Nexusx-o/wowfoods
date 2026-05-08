@@ -10,10 +10,10 @@ include('../includes/header.php');
                 <div class="card shadow-sm border-0 rounded-4 p-3 sticky-top" style="top: 100px;">
                     <h6 class="fw-bold mb-3 text-uppercase small">Categories</h6>
                     <ul class="list-group list-group-flush small">
-                        <a href="menu_view.php" class="list-group-item list-group-item-action border-0 <?php echo $category_id == 0 ? 'text-danger fw-bold' : ''; ?>">All</a>
+                        <a href="menu_view_controller.php" class="list-group-item list-group-item-action border-0 <?php echo $category_id == 0 ? 'text-danger fw-bold' : ''; ?>">All</a>
                         
                         <?php foreach($categories as $cat): ?>
-                        <a href="menu_view.php?cat_id=<?php echo $cat['id']; ?>" 
+                        <a href="menu_view_controller.php?cat_id=<?php echo $cat['id']; ?>" 
                            class="list-group-item list-group-item-action border-0 <?php echo $category_id == $cat['id'] ? 'text-danger fw-bold' : ''; ?>">
                             <?php echo htmlspecialchars($cat['title']); ?>
                         </a>

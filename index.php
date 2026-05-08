@@ -91,13 +91,13 @@ $db = $database->getConnection();
            <div class="row g-4">
 <?php 
 $query = "SELECT 
-            category_id, 
-            category_name, 
-            MIN(image_name) as image_name 
-          FROM vw_food_details 
-          WHERE active = 'Yes' 
-          GROUP BY category_id, category_name 
-          LIMIT 4";
+    category_id, 
+    category_name, 
+    MIN(image_name) as image_name 
+FROM vw_food_details 
+WHERE active = 'Yes' 
+GROUP BY category_id, category_name 
+LIMIT 4;";
           
 try {
     $stmt = $db->prepare($query);
