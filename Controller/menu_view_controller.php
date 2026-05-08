@@ -4,7 +4,7 @@
  */
 
 // 1. පද්ධතිය ආරම්භ කිරීම සහ අවශ්‍ය Files සම්බන්ධ කිරීම
-require_once __DIR__ . '/../config/init.php'; // Session start මෙහි ඇතැයි උපකල්පනය කෙරේ
+require_once __DIR__ . '/../includes/session.php'; 
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../Model/menu_view_controller_model.php';
 
@@ -36,6 +36,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['food_id'])) {
                 'qty' => 1
             ];
         }
+        $cat_id = isset($_POST['current_cat']) ? (int)$_POST['current_cat'] : 0;
+        header("Location: menu_view_controller.php" . ($cat_id > 0 ? "?cat_id=$cat_id" : ""));
+        exit();
     }
     header("Location: menu_view_controller.php" . (isset($_GET['cat_id']) ? "?cat_id=".$_GET['cat_id'] : ""));
     exit();

@@ -43,7 +43,7 @@
                         ?>
                             <!-- Customer Links -->
                             <li class="nav-item">
-                                <a class="nav-link px-3 fw-bold text-danger" href="customer-dashboard.php">
+                                <a class="nav-link px-3 fw-bold text-danger" href="../controller/customer_dashboard_controller.php">
                                     <i class="fas fa-history me-1"></i> My Orders
                                 </a>
                             </li>
@@ -57,7 +57,7 @@
                         <?php elseif(isset($_SESSION['user_id'])): ?>
                             <!-- Admin Links -->
                             <li class="nav-item">
-                                <a class="nav-link px-3" href="admin_dashboard_controller.php">Dashboard</a>
+                                <a class="nav-link px-3" href="../controller/admin_dashboard_controller.php">Dashboard</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link btn-login ms-lg-3" href="../controller/logout_controller.php">Logout</a>

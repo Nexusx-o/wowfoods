@@ -5,8 +5,8 @@ class Database {
     private $host = 'localhost';
     private $db   = 'food_order';
     private $user = 'root';
-    private $pass = 'myposadminauthentication';
-    private $port = 3306;
+    private $pass = '';
+    private $port = 3308;
     private $charset = 'utf8mb4';
 
     private $pdo = null;

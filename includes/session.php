@@ -42,6 +42,6 @@ function logout() {
     session_destroy();
 
     // 4. Redirect to login or home page
-    header("Location: ../view/login_view.php");
+    header("Location: ../index.php");
     exit();
 }
